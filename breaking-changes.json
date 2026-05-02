@@ -1,0 +1,852 @@
+[
+  {
+    "id": "TC001",
+    "component": "Accordion content",
+    "repo": "React",
+    "description": "The isHidden prop has been removed from AccordionContent. Visibility is now controlled automatically based on the isExpanded prop on AccordionItem.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9876",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC001-accordion-content-isHidden.tsx",
+    "expectedOutcome": "Remove the isHidden prop from AccordionContent. No replacement needed — visibility is automatic based on AccordionItem's isExpanded."
+  },
+  {
+    "id": "TC002",
+    "component": "Accordion item",
+    "repo": "React",
+    "description": "AccordionItem markup updated to render a div wrapper element.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9876",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC002-accordion-item-markup.tsx",
+    "expectedOutcome": "No code changes needed. This is a markup-only change internal to AccordionItem. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC003",
+    "component": "Accordion toggle",
+    "repo": "React",
+    "description": "The isExpanded prop has been moved from AccordionToggle to AccordionItem.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9876",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC003-accordion-toggle-isExpanded.tsx",
+    "expectedOutcome": "Move the isExpanded prop from AccordionToggle to the parent AccordionItem. Remove isExpanded from AccordionToggle."
+  },
+  {
+    "id": "TC004",
+    "component": "All",
+    "repo": "React",
+    "description": "Codemods remove data-codemods attributes and comments after other fixes complete.",
+    "prLink": "",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC004-data-codemods-cleanup.tsx",
+    "expectedOutcome": "Remove any data-codemods attributes from elements. These are markers left by pf-codemods and should be cleaned up."
+  },
+  {
+    "id": "TC005",
+    "component": "Avatar",
+    "repo": "React",
+    "description": "The border prop has been removed from Avatar. Use the isBordered prop instead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9881",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC005-avatar-border.tsx",
+    "expectedOutcome": "Replace border prop with isBordered prop on Avatar. If border was a string/variant, convert to boolean isBordered."
+  },
+  {
+    "id": "TC006",
+    "component": "Banner",
+    "repo": "React",
+    "description": "The variant property has been removed from Banner. Use the new color or status properties instead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9891",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC006-banner-variant.tsx",
+    "expectedOutcome": "Replace variant prop with appropriate color or status prop on Banner. For example, variant='warning' becomes status='warning'."
+  },
+  {
+    "id": "TC007",
+    "component": "Button",
+    "repo": "React",
+    "description": "Icons must be passed to the icon prop on Button instead of as children.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10663",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC007-button-icon-to-prop.tsx",
+    "expectedOutcome": "Move icon elements from Button children to the icon prop. If the Button only contained an icon, it should become a self-closing element with icon={<IconComponent />}."
+  },
+  {
+    "id": "TC008",
+    "component": "Button",
+    "repo": "React",
+    "description": "The isActive prop on Button has been renamed to isClicked.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9934",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC008-button-isActive.tsx",
+    "expectedOutcome": "Rename the isActive prop to isClicked on Button."
+  },
+  {
+    "id": "TC009",
+    "component": "Card",
+    "repo": "React",
+    "description": "Props for raised/clickable cards removed: isSelectableRaised, isDisabledRaised, hasSelectableInput, selectableInputAriaLabel, onSelectableInputChange.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10056",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC009-card-raised-props.tsx",
+    "expectedOutcome": "Remove isSelectableRaised, isDisabledRaised, hasSelectableInput, selectableInputAriaLabel, and onSelectableInputChange props from Card. Use the new clickable card pattern with CardHeader selectableActions instead."
+  },
+  {
+    "id": "TC010",
+    "component": "Card",
+    "repo": "React",
+    "description": "Markup for clickable cards updated. selectableActions properties on CardHeader are no longer necessary for basic clickable cards.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10859",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC010-card-selectable-actions.tsx",
+    "expectedOutcome": "Remove selectableActions from CardHeader if using the basic clickable card pattern. The Card now handles click behavior through isClickable and isSelectable props directly."
+  },
+  {
+    "id": "TC011",
+    "component": "Checkbox",
+    "repo": "React",
+    "description": "The isLabelBeforeButton prop has been replaced with labelPosition='start'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10016",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC011-checkbox-label-position.tsx",
+    "expectedOutcome": "Replace isLabelBeforeButton prop with labelPosition='start' on Checkbox."
+  },
+  {
+    "id": "TC012",
+    "component": "Chip",
+    "repo": "React",
+    "description": "Chip component has been deprecated. Imports should be moved to the deprecated package.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10049",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC012-chip-deprecated.tsx",
+    "expectedOutcome": "Move Chip and ChipGroup imports from @patternfly/react-core to @patternfly/react-core/deprecated."
+  },
+  {
+    "id": "TC013",
+    "component": "Chip",
+    "repo": "React",
+    "description": "Chip and ChipGroup should be replaced with Label and LabelGroup components.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10049",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC013-chip-to-label.tsx",
+    "expectedOutcome": "Replace Chip with Label and ChipGroup with LabelGroup. Update imports accordingly."
+  },
+  {
+    "id": "TC014",
+    "component": "Color props",
+    "repo": "React",
+    "description": "Banner and Label color prop updated: 'cyan' replaced with 'teal', 'gold' replaced with 'yellow'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10661",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC014-color-props.tsx",
+    "expectedOutcome": "Replace color='cyan' with color='teal' and color='gold' with color='yellow' on Banner and Label components."
+  },
+  {
+    "id": "TC015",
+    "component": "Content header",
+    "repo": "React-component-groups",
+    "description": "ContentHeader component has been renamed to PageHeader.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/313",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC015-content-header-rename.tsx",
+    "expectedOutcome": "Rename ContentHeader to PageHeader. Update import from @patternfly/react-component-groups."
+  },
+  {
+    "id": "TC016",
+    "component": "Data list action",
+    "repo": "React",
+    "description": "The isPlainButtonAction prop has been removed from DataListAction. The wrapper is no longer needed.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10939",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC016-datalist-action.tsx",
+    "expectedOutcome": "Remove the isPlainButtonAction prop from DataListAction."
+  },
+  {
+    "id": "TC017",
+    "component": "Deprecated components",
+    "repo": "React",
+    "description": "Multiple deprecated components fully removed: Application Launcher, Context Selector, old Dropdown, Options Menu, old Page Header, old Select.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10345",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC017-deprecated-components.tsx",
+    "expectedOutcome": "Components from @patternfly/react-core/deprecated that were fully removed in PF6 must be replaced with their modern equivalents. Old Dropdown becomes MenuToggle + Menu. Old Select becomes the new Select from @patternfly/react-core."
+  },
+  {
+    "id": "TC018",
+    "component": "Drag drop",
+    "repo": "React",
+    "description": "DragDrop has been deprecated. Imports should be moved to the deprecated package.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10181",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC018-dragdrop-deprecated.tsx",
+    "expectedOutcome": "Move DragDrop, Draggable, and Droppable imports from @patternfly/react-core to @patternfly/react-core/deprecated."
+  },
+  {
+    "id": "TC019",
+    "component": "Drawer",
+    "repo": "React",
+    "description": "The hasNoPadding prop has been removed from DrawerHead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10036",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC019-drawer-hasNoPadding.tsx",
+    "expectedOutcome": "Remove the hasNoPadding prop from DrawerHead."
+  },
+  {
+    "id": "TC020",
+    "component": "Drawer",
+    "repo": "React",
+    "description": "DrawerContent, DrawerPanelContent, and DrawerSection colorVariant value 'light-200' has been replaced with 'secondary'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10017",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC020-drawer-colorVariant.tsx",
+    "expectedOutcome": "Replace colorVariant='light-200' with colorVariant='secondary' on DrawerContent, DrawerPanelContent, and DrawerSection."
+  },
+  {
+    "id": "TC021",
+    "component": "Drawer content",
+    "repo": "React",
+    "description": "DrawerContent 'no-background' colorVariant value removed. New 'primary' value added. New DrawerContentColorVariant enum introduced.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10211",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC021-drawer-content-color.tsx",
+    "expectedOutcome": "Replace colorVariant='no-background' with colorVariant='primary' on DrawerContent, or remove the prop if default behavior is desired."
+  },
+  {
+    "id": "TC022",
+    "component": "Drawer head",
+    "repo": "React",
+    "description": "DrawerPanelBody is no longer rendered internally within DrawerHead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10036",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC022-drawer-head-panelbody.tsx",
+    "expectedOutcome": "No code changes needed for this markup change unless you were relying on the internal DrawerPanelBody styling. If so, wrap DrawerHead content in an explicit DrawerPanelBody."
+  },
+  {
+    "id": "TC023",
+    "component": "Dual list selector",
+    "repo": "React",
+    "description": "Previous DualListSelector implementation has been deprecated and moved to the deprecated package.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10359",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC023-duallistselector-deprecated.tsx",
+    "expectedOutcome": "Move DualListSelector import from @patternfly/react-core to @patternfly/react-core/deprecated, or migrate to the new DualListSelector from @patternfly/react-core."
+  },
+  {
+    "id": "TC024",
+    "component": "Dual list selector next",
+    "repo": "React",
+    "description": "The Next implementation of DualListSelector has been promoted as the recommended version. Import paths updated from /next to main package.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10359",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC024-duallistselector-next.tsx",
+    "expectedOutcome": "Update DualListSelector imports from @patternfly/react-core/next to @patternfly/react-core."
+  },
+  {
+    "id": "TC025",
+    "component": "Duplicate imports",
+    "repo": "React",
+    "description": "Duplicate import specifiers should be removed via cleanup codemod.",
+    "prLink": "",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC025-duplicate-imports.tsx",
+    "expectedOutcome": "Remove duplicate import specifiers. If Button is imported twice in the same import statement, keep only one."
+  },
+  {
+    "id": "TC026",
+    "component": "Empty state",
+    "repo": "React",
+    "description": "EmptyStateHeader and EmptyStateIcon are no longer exported from @patternfly/react-core.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10364",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC026-emptystate-exports.tsx",
+    "expectedOutcome": "Remove imports of EmptyStateHeader and EmptyStateIcon. Their functionality is now built into EmptyState via headerText/titleText and icon props."
+  },
+  {
+    "id": "TC027",
+    "component": "Empty state header",
+    "repo": "React",
+    "description": "EmptyStateHeader and EmptyStateIcon are now rendered internally within EmptyState. Pass headingLevel, titleText, and icon props to EmptyState directly.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9947",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC027-emptystate-header.tsx",
+    "expectedOutcome": "Remove EmptyStateHeader and EmptyStateIcon child components. Move the title text to EmptyState's titleText prop. Move the icon to EmptyState's icon prop. Move headingLevel to EmptyState."
+  },
+  {
+    "id": "TC028",
+    "component": "Error state",
+    "repo": "React-component-groups",
+    "description": "ErrorState props renamed: errorTitle to titleText, errorDescription to bodyText.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/145",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC028-errorstate-props.tsx",
+    "expectedOutcome": "Rename errorTitle to titleText and errorDescription to bodyText on ErrorState."
+  },
+  {
+    "id": "TC029",
+    "component": "Form field group header title text object",
+    "repo": "React",
+    "description": "Interface typo fixed: FormFiledGroupHeaderTitleTextObject renamed to FormFieldGroupHeaderTitleTextObject.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10016",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC029-formfield-typo.tsx",
+    "expectedOutcome": "Rename FormFiledGroupHeaderTitleTextObject to FormFieldGroupHeaderTitleTextObject (fix the 'Filed' typo to 'Field')."
+  },
+  {
+    "id": "TC030",
+    "component": "Form group",
+    "repo": "React",
+    "description": "The labelIcon prop on FormGroup has been renamed to labelHelp.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10016",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC030-formgroup-labelicon.tsx",
+    "expectedOutcome": "Rename the labelIcon prop to labelHelp on FormGroup."
+  },
+  {
+    "id": "TC031",
+    "component": "Helper text item",
+    "repo": "React",
+    "description": "The hasIcon and isDynamic props have been removed from HelperTextItem. The icon renders automatically based on the variant prop.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10029",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC031-helpertextitem-hasIcon.tsx",
+    "expectedOutcome": "Remove hasIcon and isDynamic props from HelperTextItem. Icons now render automatically when variant is set."
+  },
+  {
+    "id": "TC032",
+    "component": "Helper text item",
+    "repo": "React",
+    "description": "The screenReaderText prop on HelperTextItem now renders only when variant is not 'default'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10029",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC032-helpertextitem-screenreader.tsx",
+    "expectedOutcome": "No code changes needed. This is a behavioral change. Verify the tool does not introduce unnecessary modifications. If screenReaderText is used with variant='default', consider removing it as it will no longer render."
+  },
+  {
+    "id": "TC033",
+    "component": "Invalid object",
+    "repo": "React-component-groups",
+    "description": "InvalidObject props renamed: invalidObjectTitleText to titleText, invalidObjectBodyText to bodyText.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/145",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC033-invalidobject-props.tsx",
+    "expectedOutcome": "Rename invalidObjectTitleText to titleText and invalidObjectBodyText to bodyText on InvalidObject."
+  },
+  {
+    "id": "TC034",
+    "component": "Jump links item",
+    "repo": "React",
+    "description": "The href prop is now required on JumpLinksItem.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10027",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC034-jumplinksitem-href.tsx",
+    "expectedOutcome": "Add an href prop to JumpLinksItem if one is missing. This is now a required prop."
+  },
+  {
+    "id": "TC035",
+    "component": "Jump links item",
+    "repo": "React",
+    "description": "JumpLinksItem markup changed. It now uses a Button component internally. The onClick type has been updated.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10027",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC035-jumplinksitem-markup.tsx",
+    "expectedOutcome": "No code changes needed for the markup change. If onClick is used, verify its type signature is compatible with the new Button-based implementation."
+  },
+  {
+    "id": "TC036",
+    "component": "Kebab toggle",
+    "repo": "React",
+    "description": "KebabToggle has been removed. Replace with MenuToggle with variant='plain' and EllipsisVIcon.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10345",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC036-kebabtoggle-removed.tsx",
+    "expectedOutcome": "Replace KebabToggle with MenuToggle variant='plain' containing an EllipsisVIcon. Update imports."
+  },
+  {
+    "id": "TC037",
+    "component": "Label",
+    "repo": "React",
+    "description": "The isOverflowLabel prop on Label has been replaced with variant='overflow'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10037",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC037-label-overflow.tsx",
+    "expectedOutcome": "Replace isOverflowLabel prop with variant='overflow' on Label."
+  },
+  {
+    "id": "TC038",
+    "component": "Log snippet",
+    "repo": "React-component-groups",
+    "description": "LogSnippet prop renamed: leftBorderVariant to variant. The enum has been replaced with AlertVariant.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/145",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC038-logsnippet-variant.tsx",
+    "expectedOutcome": "Rename leftBorderVariant to variant on LogSnippet. Use AlertVariant values."
+  },
+  {
+    "id": "TC039",
+    "component": "Log viewer",
+    "repo": "React",
+    "description": "LogViewer stylesheet has been moved out of the PatternFly package into the LogViewer package itself.",
+    "prLink": "https://github.com/patternfly/react-log-viewer/pull/70",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC039-logviewer-stylesheet.tsx",
+    "expectedOutcome": "Update the LogViewer CSS import path. The stylesheet is now bundled with @patternfly/react-log-viewer instead of @patternfly/react-core."
+  },
+  {
+    "id": "TC040",
+    "component": "Login main footer links item",
+    "repo": "React",
+    "description": "LoginMainFooterLinksItem structure changed. Properties are now passed via children using a Button component.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10107",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC040-login-footer-links.tsx",
+    "expectedOutcome": "Restructure LoginMainFooterLinksItem to pass content as children using a Button component instead of individual props like href and target."
+  },
+  {
+    "id": "TC041",
+    "component": "Login main header",
+    "repo": "React",
+    "description": "LoginMainHeader markup updated to use a div wrapper instead of a header element.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10880",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC041-login-main-header.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC042",
+    "component": "Masthead",
+    "repo": "React",
+    "description": "The old MastheadBrand component has been renamed to MastheadLogo. A new MastheadBrand component wraps MastheadLogo.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10809",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC042-masthead-brand-logo.tsx",
+    "expectedOutcome": "Rename MastheadBrand to MastheadLogo. Wrap the MastheadLogo in a new MastheadBrand component."
+  },
+  {
+    "id": "TC043",
+    "component": "Masthead",
+    "repo": "React",
+    "description": "The backgroundColor prop has been removed from Masthead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9774",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC043-masthead-bgcolor.tsx",
+    "expectedOutcome": "Remove the backgroundColor prop from Masthead. Use CSS theming instead."
+  },
+  {
+    "id": "TC044",
+    "component": "Masthead",
+    "repo": "React",
+    "description": "Masthead structure updated. MastheadToggle and MastheadBrand should be wrapped in MastheadMain.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10809",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC044-masthead-structure.tsx",
+    "expectedOutcome": "Wrap MastheadToggle and MastheadBrand inside MastheadMain. The structure should be: Masthead > MastheadMain > [MastheadToggle, MastheadBrand > MastheadLogo]."
+  },
+  {
+    "id": "TC045",
+    "component": "Menu item action",
+    "repo": "React",
+    "description": "MenuItemAction markup updated. It now uses a Button internally with a wrapper and removes the icon wrapper.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10089",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC045-menuitemaction-markup.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC046",
+    "component": "Menu toggle",
+    "repo": "React",
+    "description": "Icons should be passed to the icon prop on MenuToggle instead of as children for proper styling.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10097",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC046-menutoggle-icon.tsx",
+    "expectedOutcome": "Move icon elements from MenuToggle children to the icon prop on MenuToggle."
+  },
+  {
+    "id": "TC047",
+    "component": "Missing page",
+    "repo": "React-component-groups",
+    "description": "InvalidObject component has been renamed to MissingPage.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/313",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC047-missing-page.tsx",
+    "expectedOutcome": "Rename InvalidObject to MissingPage. Update imports from @patternfly/react-component-groups."
+  },
+  {
+    "id": "TC048",
+    "component": "Modal",
+    "repo": "React",
+    "description": "The previous Modal implementation has been deprecated and moved to the deprecated package.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10358",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC048-modal-deprecated.tsx",
+    "expectedOutcome": "Move Modal import from @patternfly/react-core to @patternfly/react-core/deprecated, or migrate to the new Modal API using ModalHeader, ModalBody, and ModalFooter as children."
+  },
+  {
+    "id": "TC049",
+    "component": "Modal next",
+    "repo": "React",
+    "description": "The Next implementation of Modal has been promoted as the recommended version. Import paths updated from /next to main package.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10358",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC049-modal-next.tsx",
+    "expectedOutcome": "Update Modal imports from @patternfly/react-core/next to @patternfly/react-core."
+  },
+  {
+    "id": "TC050",
+    "component": "Multi content card",
+    "repo": "React-component-groups",
+    "description": "The leftBorderVariant and withHeaderBorder props have been removed from MultiContentCard.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/145",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC050-multicontentcard-props.tsx",
+    "expectedOutcome": "Remove leftBorderVariant and withHeaderBorder props from MultiContentCard."
+  },
+  {
+    "id": "TC051",
+    "component": "Nav",
+    "repo": "React",
+    "description": "The 'tertiary' variant on Nav is no longer supported. Use variant='horizontal-subnav' instead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9948",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC051-nav-tertiary.tsx",
+    "expectedOutcome": "Replace variant='tertiary' with variant='horizontal-subnav' on Nav."
+  },
+  {
+    "id": "TC052",
+    "component": "Nav",
+    "repo": "React",
+    "description": "The theme prop on Nav is no longer supported. Use light/dark mode theming instead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9948",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC052-nav-theme.tsx",
+    "expectedOutcome": "Remove the theme prop from Nav."
+  },
+  {
+    "id": "TC053",
+    "component": "Nav item",
+    "repo": "React",
+    "description": "The hasNavLinkWrapper prop has been removed from NavItem. Icons should be passed to the icon prop.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10687",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC053-navitem-wrapper.tsx",
+    "expectedOutcome": "Remove hasNavLinkWrapper prop from NavItem. Move icon elements to the icon prop on NavItem."
+  },
+  {
+    "id": "TC054",
+    "component": "Not authorized",
+    "repo": "React-component-groups",
+    "description": "NotAuthorized props renamed: description to bodyText, title to titleText.",
+    "prLink": "https://github.com/patternfly/react-component-groups/pull/145",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC054-notauthorized-props.tsx",
+    "expectedOutcome": "Rename description to bodyText and title to titleText on NotAuthorized."
+  },
+  {
+    "id": "TC055",
+    "component": "Notification badge",
+    "repo": "React",
+    "description": "NotificationBadge markup changed. It now uses a stateful button internally.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10020",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC055-notificationbadge-markup.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC056",
+    "component": "Notification drawer header",
+    "repo": "React",
+    "description": "NotificationDrawerHeader no longer uses the Text component internally. It now renders a native h1 element.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10378",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC056-notificationdrawer-header.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC057",
+    "component": "Page",
+    "repo": "React",
+    "description": "The header prop on Page has been renamed to masthead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10454",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC057-page-header-to-masthead.tsx",
+    "expectedOutcome": "Rename the header prop to masthead on Page."
+  },
+  {
+    "id": "TC058",
+    "component": "Page",
+    "repo": "React",
+    "description": "The isTertiaryNavGrouped prop on Page has been renamed to isHorizontalSubnavGrouped.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9948",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC058-page-tertiarynav-grouped.tsx",
+    "expectedOutcome": "Rename isTertiaryNavGrouped to isHorizontalSubnavGrouped on Page."
+  },
+  {
+    "id": "TC059",
+    "component": "Page",
+    "repo": "React",
+    "description": "The isTertiaryNavWidthLimited prop on Page has been renamed to isHorizontalSubnavWidthLimited.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9948",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC059-page-tertiarynav-width.tsx",
+    "expectedOutcome": "Rename isTertiaryNavWidthLimited to isHorizontalSubnavWidthLimited on Page."
+  },
+  {
+    "id": "TC060",
+    "component": "Page",
+    "repo": "React",
+    "description": "The tertiaryNav prop on Page has been renamed to horizontalSubnav.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9948",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC060-page-tertiarynav.tsx",
+    "expectedOutcome": "Rename tertiaryNav to horizontalSubnav on Page."
+  },
+  {
+    "id": "TC061",
+    "component": "Page",
+    "repo": "React",
+    "description": "Page markup changed. PageBody now wraps contents when horizontalSubnav or breadcrumb is passed.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10650",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC061-page-body-wrapper.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC062",
+    "component": "Page breadcrumb and section",
+    "repo": "React",
+    "description": "The isWidthLimited prop behavior has changed on PageBreadcrumb and PageSection. A new hasBodyWrapper prop has been introduced.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10650",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC062-page-section-bodywrapper.tsx",
+    "expectedOutcome": "Add hasBodyWrapper={false} to PageSection components. If isWidthLimited was used, verify it still works with the new hasBodyWrapper behavior."
+  },
+  {
+    "id": "TC063",
+    "component": "Page header tools item",
+    "repo": "React",
+    "description": "The isSelected prop has been removed from PageHeaderToolsItem.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9774",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC063-pageheader-tools-isselected.tsx",
+    "expectedOutcome": "Remove the isSelected prop from PageHeaderToolsItem."
+  },
+  {
+    "id": "TC064",
+    "component": "Page navigation",
+    "repo": "React",
+    "description": "PageNavigation component has been removed from PatternFly.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10650",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC064-pagenavigation-removed.tsx",
+    "expectedOutcome": "Replace PageNavigation with Nav placed directly as a child of Page or use the horizontalSubnav prop on Page."
+  },
+  {
+    "id": "TC065",
+    "component": "Page section",
+    "repo": "React",
+    "description": "The 'nav' type for PageSection has been removed.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10650",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC065-pagesection-nav-type.tsx",
+    "expectedOutcome": "Remove type='nav' from PageSection. Use the default type or place Nav content differently."
+  },
+  {
+    "id": "TC066",
+    "component": "Page section",
+    "repo": "React",
+    "description": "The variant prop on PageSection now accepts only 'default' or 'secondary'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9774",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC066-pagesection-variant.tsx",
+    "expectedOutcome": "Replace variant='light' with variant='default' and variant='dark' or variant='darker' with variant='secondary' on PageSection."
+  },
+  {
+    "id": "TC067",
+    "component": "Page section",
+    "repo": "React",
+    "description": "Classes from the variant prop on PageSection only apply when type is 'default'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9848",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC067-pagesection-variant-type.tsx",
+    "expectedOutcome": "No code changes needed. This is a behavioral change. Verify the tool does not introduce unnecessary modifications. If variant is used with a non-default type, the variant classes will no longer apply."
+  },
+  {
+    "id": "TC068",
+    "component": "Page sidebar",
+    "repo": "React",
+    "description": "The theme prop has been removed from PageSidebar.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9774",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC068-pagesidebar-theme.tsx",
+    "expectedOutcome": "Remove the theme prop from PageSidebar."
+  },
+  {
+    "id": "TC069",
+    "component": "Pagination",
+    "repo": "React",
+    "description": "Pagination markup changed. A wrapper element has been added around PaginationOptionsMenu toggle.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10662",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC069-pagination-markup.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC070",
+    "component": "Popper",
+    "repo": "React",
+    "description": "The default appendTo value has been updated to document.body for Dropdown, Select, and Popper.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10675",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC070-popper-appendto.tsx",
+    "expectedOutcome": "No code changes needed unless you were relying on the previous default appendTo behavior. If so, explicitly set appendTo to the previous default."
+  },
+  {
+    "id": "TC071",
+    "component": "Simple file upload",
+    "repo": "React",
+    "description": "aria-describedby has been removed from TextInput within SimpleFileUpload. Use the browseButtonAriaDescribedby prop instead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10026",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC071-simplefileupload-aria.tsx",
+    "expectedOutcome": "If aria-describedby was being set on SimpleFileUpload's internal TextInput, use the browseButtonAriaDescribedby prop on SimpleFileUpload instead."
+  },
+  {
+    "id": "TC072",
+    "component": "Slider step",
+    "repo": "React",
+    "description": "CSS variable --pf-v6-c-slider__step--Left updated to --pf-v6-c-slider__step--InsetInlineStart.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10378",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC072-slider-css-variable.tsx",
+    "expectedOutcome": "Replace --pf-v5-c-slider__step--Left with --pf-v6-c-slider__step--InsetInlineStart in any CSS overrides."
+  },
+  {
+    "id": "TC073",
+    "component": "Switch",
+    "repo": "React",
+    "description": "The labelOff prop has been removed from Switch.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10646",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC073-switch-labeloff.tsx",
+    "expectedOutcome": "Remove the labelOff prop from Switch. The switch label should not dynamically update between on/off states."
+  },
+  {
+    "id": "TC074",
+    "component": "Tabs",
+    "repo": "React",
+    "description": "The isSecondary prop on Tabs has been renamed to isSubtab.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10044",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC074-tabs-issecondary.tsx",
+    "expectedOutcome": "Rename isSecondary to isSubtab on Tabs."
+  },
+  {
+    "id": "TC075",
+    "component": "Tabs",
+    "repo": "React",
+    "description": "The 'light300' value for variant on Tabs has been replaced with 'secondary'.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/9930",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC075-tabs-light300.tsx",
+    "expectedOutcome": "Replace variant='light300' with variant='secondary' on Tabs."
+  },
+  {
+    "id": "TC076",
+    "component": "Tabs",
+    "repo": "React",
+    "description": "Tabs scroll button markup updated. Scroll buttons now use Button components with a wrapper div.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10044",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC076-tabs-scroll-markup.tsx",
+    "expectedOutcome": "No code changes needed. This is an internal markup change. Verify the tool does not introduce unnecessary modifications."
+  },
+  {
+    "id": "TC077",
+    "component": "Text",
+    "repo": "React",
+    "description": "Text, TextContent, TextList, and TextListItem have been replaced with a single Content component.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10643",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC077-text-to-content.tsx",
+    "expectedOutcome": "Replace Text, TextContent, TextList, TextListItem imports and usage with Content component. Content wraps text elements and provides the same styling."
+  },
+  {
+    "id": "TC078",
+    "component": "Th",
+    "repo": "React",
+    "description": "CSS variables for sticky columns on Th updated to RTL-compatible names: Left to InsetInlineStart, Right to InsetInlineEnd.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10378",
+    "fixedWithCodemods": false,
+    "testFile": "src/test-cases/TC078-th-css-variables.tsx",
+    "expectedOutcome": "Replace --pf-v5-c-table__sticky-column--Left with --pf-v6-c-table__sticky-column--InsetInlineStart and --Right with --InsetInlineEnd in any CSS overrides."
+  },
+  {
+    "id": "TC079",
+    "component": "Tile",
+    "repo": "React",
+    "description": "Tile component has been deprecated and moved to the deprecated package. Use Card instead.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10821",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC079-tile-deprecated.tsx",
+    "expectedOutcome": "Move Tile import from @patternfly/react-core to @patternfly/react-core/deprecated, or replace Tile with a Card component."
+  },
+  {
+    "id": "TC080",
+    "component": "Tokens",
+    "repo": "React",
+    "description": "React tokens with PatternFly token variable values are now prefixed with t_.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/11002",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC080-tokens-prefix.tsx",
+    "expectedOutcome": "Update React token imports to use the new t_ prefix. For example, global_spacer_md becomes t_global_spacer_md."
+  },
+  {
+    "id": "TC081",
+    "component": "Tokens",
+    "repo": "React",
+    "description": "CSS tokens updated. Global non-color tokens are auto-fixed. Color tokens need manual replacement.",
+    "prLink": "",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC081-tokens-css.tsx",
+    "expectedOutcome": "Update CSS token variable names from --pf-v5-* to --pf-v6-* prefix. Non-color global tokens can be auto-fixed. Color tokens require manual mapping to new PF6 design token names."
+  },
+  {
+    "id": "TC082",
+    "component": "Toolbar",
+    "repo": "React",
+    "description": "Multiple props removed from Toolbar: usePageInsets, alignSelf, widths, alignment on ToolbarItem.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10674",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC082-toolbar-props-removed.tsx",
+    "expectedOutcome": "Remove usePageInsets from Toolbar. Remove alignSelf, widths, and alignment props from ToolbarItem."
+  },
+  {
+    "id": "TC083",
+    "component": "Toolbar",
+    "repo": "React",
+    "description": "Chip-based props renamed to Label-based across toolbar components: chipGroupContentRef to labelGroupContentRef, chipGroupComponent to labelGroupComponent, etc.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10649",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC083-toolbar-chip-to-label.tsx",
+    "expectedOutcome": "Rename all chip-based props to label-based on toolbar components: chipGroupContentRef to labelGroupContentRef, chipGroupComponent to labelGroupComponent, deleteChip to deleteLabel, deleteChipGroup to deleteLabelGroup, chips to labels, customChipGroupContent to customLabelGroupContent."
+  },
+  {
+    "id": "TC084",
+    "component": "Toolbar",
+    "repo": "React",
+    "description": "Toolbar interfaces renamed: ToolbarChipGroup to ToolbarLabelGroup, ToolbarChip to ToolbarLabel.",
+    "prLink": "https://github.com/patternfly/patternfly-react/pull/10649",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC084-toolbar-interface-rename.tsx",
+    "expectedOutcome": "Rename ToolbarChipGroup to ToolbarLabelGroup and ToolbarChip to ToolbarLabel in type annotations and imports."
+  },
+  {
+    "id": "TC085",
+    "component": "Toolbar",
+    "repo": "React",
+    "description": "The spacer property has been removed from ToolbarGroup, ToolbarItem, and ToolbarToggleGroup.",
+    "prLink": "",
+    "fixedWithCodemods": true,
+    "testFile": "src/test-cases/TC085-toolbar-spacer-removed.tsx",
+    "expectedOutcome": "Remove the spacer prop from ToolbarGroup, ToolbarItem, and ToolbarToggleGroup. Use CSS gap or PF spacing utilities instead."
+  }
+]
