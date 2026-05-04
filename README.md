@@ -112,6 +112,40 @@ Each test case gets two scores:
 - `better` — your tool does better
 - `n/a` — pf-codemods doesn't fix this
 
+## Baseline Result: pf-codemods
+
+The pf-codemods baseline was established by running the evaluator against the `pf-codemods-baseline` branch — essentially scoring pf-codemods against itself. This tells us what the official tool actually achieves on this benchmark.
+
+```
+Overall: 66/85 fully correct (77.6%)
+
+┌─────────────────────────┬───────┬───────┐
+│          Score          │ Count │   %   │
+├─────────────────────────┼───────┼───────┤
+│ Fully correct (3)       │    66 │ 77.6% │
+│ Partially correct (1-2) │    10 │ 11.8% │
+│ Wrong/missing (0)       │     9 │ 10.6% │
+└─────────────────────────┴───────┴───────┘
+```
+
+### How to interpret this
+
+- **66/85 is the bar to match.** A migration tool that scores 66+ on this benchmark is at parity with the official PatternFly migration tool.
+- **The 10 partial scores (1-2)** are cases where pf-codemods does part of the job but not all of it — e.g., removing a deprecated prop but not adding its replacement, or leaving `data-codemods` marker attributes behind.
+- **The 9 zeros** fall into three categories:
+  - **CSS variable migrations** (TC072, TC078, TC081) — pf-codemods doesn't touch `--pf-v5-*` CSS variables at all. A tool that handles these has immediate unique value.
+  - **Test case design issues** (TC025, TC063) — these test cases can't properly exercise their breaking changes due to TypeScript compilation constraints. They should be redesigned.
+  - **Baseline generation artifacts** (TC017, TC036, TC070) — deprecated components were manually stubbed during baseline creation. These scores reflect our workarounds, not pf-codemods behavior.
+- **Anything above 66 means your tool beats pf-codemods.** The scorecard's `vsCodemods` field shows exactly which test cases your tool handles better.
+
+### Where a tool can exceed pf-codemods
+
+The biggest opportunities for unique value:
+1. **CSS token/variable migration** — pf-codemods has no CSS migration logic at all (3 test cases)
+2. **"Next" API promotions** — pf-codemods incorrectly moves next-generation APIs to `/deprecated` instead of promoting them (TC024, TC049)
+3. **Deprecated component replacement** — migrating old Dropdown/Select to modern MenuToggle/Menu patterns (TC017, TC036)
+4. **Complete prop transforms** — cases where pf-codemods removes a prop but doesn't add its replacement (TC009, TC053, TC066)
+
 ## License
 
 See [LICENSE](LICENSE).
