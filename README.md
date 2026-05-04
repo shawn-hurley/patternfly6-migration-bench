@@ -1,1 +1,117 @@
 # patternfly6-migration-bench
+
+A benchmark suite for evaluating PatternFly 5-to-6 migration tools.
+
+## Overview
+
+This repo contains **85 minimal React components**, each exercising one specific PF5 API that breaks in PF6. These come from the official [PatternFly 6 Release Notes](https://www.patternfly.org/get-started/upgrade/release-notes/) breaking changes table.
+
+The purpose is to measure how well a migration tool handles each individual breaking change, and compare its output against [pf-codemods](https://github.com/patternfly/pf-codemods) — the official PatternFly migration tool.
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- [Claude Code](https://claude.ai/claude-code) (for the evaluator)
+
+### Setup
+
+```bash
+git clone <this-repo>
+cd patternfly6-migration-bench
+npm install
+npm run build  # Verify: should build cleanly against PF5
+```
+
+### Evaluate a Migration Tool
+
+1. **Run your migration tool** against this repo's source code (on the `main` branch)
+
+2. **Push the result as a branch:**
+   ```bash
+   git checkout -b run/my-tool-2026-05-04
+   git add -A
+   git commit -m "Migration output from my-tool"
+   ```
+
+3. **Score it** (requires Claude Code):
+   ```bash
+   claude
+   # Then in the Claude Code session:
+   /evaluate-migration run/my-tool-2026-05-04
+   ```
+
+4. **Review results** in `results/<date>/scorecard.json` and `results/<date>/report.md`
+
+## What's in the Box
+
+### Test Cases (`src/test-cases/`)
+
+85 `.tsx` files, one per PF6 breaking change. Each is a minimal React component that uses the PF5 API pattern that needs migration. Examples:
+
+| Test Case | What It Tests |
+|-----------|--------------|
+| TC001 | `isHidden` prop removed from AccordionContent |
+| TC007 | Button icons must move to `icon` prop |
+| TC027 | EmptyState header/icon now rendered internally |
+| TC048 | Modal deprecated, moved to deprecated package |
+| TC057 | Page `header` prop renamed to `masthead` |
+| TC077 | Text/TextContent replaced with Content |
+
+### Catalog (`breaking-changes.json`)
+
+JSON file with all 85 breaking changes. Each entry has a plain-English `expectedOutcome` describing what correct migration looks like. The evaluator uses this as ground truth.
+
+- **66 of 85** are marked `fixedWithCodemods: true` (pf-codemods handles them)
+- **19 of 85** are markup-only or behavioral changes that no automated tool fixes
+
+### Branches
+
+| Branch | What It Represents |
+|--------|-------------------|
+| `main` | PF5 source code (the "before" state) |
+| `pf-codemods-baseline` | What the official pf-codemods tool auto-fixes |
+| `run/*` | Your migration tool outputs (convention) |
+
+### Evaluator (`.claude/commands/evaluate-migration.md`)
+
+A Claude Code slash command that:
+1. Reads each test case from `main`, your tool's branch, and the pf-codemods baseline
+2. Scores correctness (0-3) using the `expectedOutcome` descriptions
+3. Compares against pf-codemods (worse / equal / better)
+4. Produces a JSON scorecard and markdown report
+5. Tracks trends across runs
+
+## PF5 Versions
+
+Dependencies are pinned to exact PF5 5.3.x versions (matching quipucords-ui 2.1.0). Do not upgrade — later 5.4.x versions already removed many of the APIs under test.
+
+| Package | Version |
+|---------|---------|
+| @patternfly/react-core | 5.3.4 |
+| @patternfly/react-table | 5.3.4 |
+| @patternfly/react-icons | 5.3.2 |
+| @patternfly/react-tokens | 5.3.1 |
+| @patternfly/react-component-groups | 5.4.0 |
+| @patternfly/react-styles | 5.3.1 |
+
+## Scoring
+
+Each test case gets two scores:
+
+**Correctness (0-3)**
+- 0 = Wrong/harmful change
+- 1 = Partially correct
+- 2 = Correct but non-idiomatic
+- 3 = Fully correct
+
+**vs pf-codemods**
+- `worse` — pf-codemods does better
+- `equal` — equivalent result
+- `better` — your tool does better
+- `n/a` — pf-codemods doesn't fix this
+
+## License
+
+See [LICENSE](LICENSE).
