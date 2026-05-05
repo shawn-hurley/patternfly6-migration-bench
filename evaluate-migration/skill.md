@@ -120,3 +120,7 @@ Print a concise summary to the conversation:
 - vs pf-codemods: X better, Y equal, Z worse
 - Top 3 priority fixes
 - Link to full report
+
+### Step 9: Rule analysis (if semver data present)
+
+Check if `results/<date>-<branch>/semver/` exists with `semver_rules/` and `fix-guidance/` subdirectories. If so, automatically run `/analyze-rules results/<date>-<branch>` to produce a root cause analysis of the rules and fix-guidance.
