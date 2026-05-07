@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PF6 Migration Evaluation: semver/goose/050626-2037</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2129;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --orange: #d29922;
+  --purple: #bc8cff;
+  --teal: #39d2c0;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+h1, h2, h3, h4 { font-weight: 600; }
+h1 { font-size: 28px; margin-bottom: 8px; }
+h2 { font-size: 22px; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+h3 { font-size: 18px; margin: 16px 0 8px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 13px; background: var(--surface2); padding: 2px 6px; border-radius: 4px; }
+pre { background: var(--surface2); padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.5; margin: 8px 0; }
+pre code { background: none; padding: 0; }
+
+/* Cards */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+@media (max-width: 900px) { .card-grid { grid-template-columns: 1fr; } }
+
+/* Verdict */
+.verdict { border-color: var(--orange); border-width: 2px; }
+.verdict h2 { border: none; margin-top: 0; }
+.score-card { display: inline-block; background: var(--surface2); border-radius: 8px; padding: 16px 32px; text-align: center; margin: 8px; }
+.score-card .score { font-size: 48px; font-weight: 700; }
+.score-card .label { font-size: 14px; color: var(--text-muted); }
+.score-green .score { color: var(--green); }
+.score-orange .score { color: var(--orange); }
+.score-red .score { color: var(--red); }
+
+/* Badges */
+.badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.badge-green { background: rgba(63,185,80,0.15); color: var(--green); }
+.badge-red { background: rgba(248,81,73,0.15); color: var(--red); }
+.badge-orange { background: rgba(210,153,34,0.15); color: var(--orange); }
+.badge-purple { background: rgba(188,140,255,0.15); color: var(--purple); }
+.badge-teal { background: rgba(57,210,192,0.15); color: var(--teal); }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+th, td { padding: 8px 12px; text-align: left; border: 1px solid var(--border); font-size: 14px; }
+th { background: var(--surface2); font-weight: 600; }
+tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+/* Bar charts */
+.bar-chart { margin: 16px 0; }
+.bar-row { display: flex; align-items: center; margin: 6px 0; }
+.bar-label { width: 140px; font-size: 13px; color: var(--text-muted); flex-shrink: 0; }
+.bar-track { flex: 1; height: 24px; background: var(--surface2); border-radius: 4px; overflow: hidden; position: relative; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 12px; font-weight: 600; color: var(--bg); min-width: 30px; }
+.bar-green { background: var(--green); }
+.bar-orange { background: var(--orange); }
+.bar-red { background: var(--red); }
+.bar-teal { background: var(--teal); }
+.bar-purple { background: var(--purple); }
+
+/* Progress */
+.progress-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 8px 0; background: var(--surface2); }
+.progress-segment { height: 100%; }
+
+/* Details/Summary */
+details { margin: 8px 0; }
+summary { cursor: pointer; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-weight: 600; user-select: none; }
+summary:hover { background: var(--surface2); }
+details[open] summary { border-radius: 8px 8px 0 0; border-bottom: none; }
+details .detail-content { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; }
+
+/* Diff blocks */
+.diff-add { color: var(--green); }
+.diff-rem { color: var(--red); }
+
+/* TOC */
+.toc { columns: 2; column-gap: 24px; }
+.toc li { margin: 4px 0; font-size: 14px; break-inside: avoid; }
+@media (max-width: 900px) { .toc { columns: 1; } }
+
+/* Metric */
+.metric { text-align: center; padding: 12px; }
+.metric .value { font-size: 28px; font-weight: 700; }
+.metric .label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* Footer */
+footer { margin-top: 48px; padding: 24px 0; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- 1. VERDICT BANNER -->
+<div class="card verdict">
+<h2>Migration Evaluation Verdict</h2>
+<p style="color:var(--text-muted); margin-bottom: 16px;">Single-branch assessment of <code>semver/goose/050626-2037</code> for PatternFly 5 &rarr; 6 migration quality</p>
+
+<div style="text-align:center; margin: 24px 0;">
+  <div class="score-card score-orange">
+    <div class="score">7.8</div>
+    <div class="label">Overall Score (out of 10)</div>
+  </div>
+  <div class="score-card score-green">
+    <div class="score">199</div>
+    <div class="label">Points (out of 255 max)</div>
+  </div>
+  <div class="score-card score-green">
+    <div class="score">0</div>
+    <div class="label">Build Errors</div>
+  </div>
+</div>
+
+<h3>Recommendation: <span class="badge badge-orange">FIX BEFORE SHIP</span></h3>
+<ul style="margin: 12px 0 0 20px;">
+  <li><strong>Strengths:</strong> Clean build, zero TypeScript errors, excellent coverage of prop renames, deprecated import moves, and complex component migrations (Dropdown, Modal, EmptyState, Select)</li>
+  <li><strong>Weaknesses:</strong> 10 test cases with incorrect migrations that <em>delete behavior</em> instead of replacing it (e.g., Banner variant, Button isActive, Checkbox labelPosition), 6 completely missed test cases including Button icon-to-prop and MenuToggle icon</li>
+  <li><strong>Key finding:</strong> The tool tends to <em>remove</em> deprecated props rather than <em>rename/replace</em> them, losing semantic meaning in ~12% of cases</li>
+  <li><strong>Risk:</strong> Functional regressions in Banner colors, Button active state, Checkbox label positioning, and Label overflow behavior</li>
+</ul>
+</div>
+
+<!-- 2. TABLE OF CONTENTS -->
+<h2 id="toc">Table of Contents</h2>
+<ol class="toc">
+  <li><a href="#verdict">Verdict &amp; Score</a></li>
+  <li><a href="#toc">Table of Contents</a></li>
+  <li><a href="#overview">Branch Overview</a></li>
+  <li><a href="#build-errors">Build Error Summary</a></li>
+  <li><a href="#scoring">Scoring Tables</a></li>
+  <li><a href="#detailed">Detailed Analysis</a></li>
+  <li><a href="#build-results">Build Results</a></li>
+  <li><a href="#risk">Risk &amp; Maintainability</a></li>
+  <li><a href="#final">Final Totals &amp; Recommendation</a></li>
+  <li><a href="#footer">Resources</a></li>
+</ol>
+
+<!-- 3. BRANCH OVERVIEW -->
+<h2 id="overview">Branch Overview</h2>
+<div class="card-grid">
+  <div class="card">
+    <h3>semver/goose/050626-2037</h3>
+    <table>
+      <tr><td>Commits</td><td><strong>2</strong></td></tr>
+      <tr><td>Files Changed</td><td><strong>68</strong> (66 source + 2 config)</td></tr>
+      <tr><td>Insertions</td><td><span style="color:var(--green)">+361</span></td></tr>
+      <tr><td>Deletions</td><td><span style="color:var(--red)">-240</span></td></tr>
+      <tr><td>package.json Updated</td><td><span class="badge badge-green">Yes</span></td></tr>
+      <tr><td>CSS Files Updated</td><td><span class="badge badge-green">3 of 3</span></td></tr>
+      <tr><td>Build Result</td><td><span class="badge badge-green">SUCCESS</span></td></tr>
+      <tr><td>Remaining pf-v5 Refs</td><td><span class="badge badge-green">0</span></td></tr>
+      <tr><td>Test Cases Touched</td><td><strong>66 of 85</strong></td></tr>
+      <tr><td>PF6 Version</td><td><code>^6.4.x</code></td></tr>
+      <tr><td>Extra Deps Added</td><td><code>@patternfly/react-drag-drop</code></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>pf-codemods Baseline (Reference)</h3>
+    <table>
+      <tr><td>Commits</td><td><strong>N/A</strong> (auto-generated)</td></tr>
+      <tr><td>Files Changed</td><td><strong>72</strong></td></tr>
+      <tr><td>Insertions</td><td><span style="color:var(--green)">+1254</span></td></tr>
+      <tr><td>Deletions</td><td><span style="color:var(--red)">-213</span></td></tr>
+      <tr><td>package.json Updated</td><td><span class="badge badge-green">Yes</span></td></tr>
+      <tr><td>CSS Files Updated</td><td><span class="badge badge-orange">0 of 3</span></td></tr>
+      <tr><td>Build Result</td><td><span class="badge badge-orange">With manual stubs</span></td></tr>
+      <tr><td>fixedWithCodemods: true</td><td><strong>66 of 85</strong></td></tr>
+      <tr><td>PF6 Version</td><td><code>^6.0.0</code></td></tr>
+      <tr><td>Extra Deps Added</td><td>None</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- 4. BUILD ERROR COMPARISON -->
+<h2 id="build-errors">Build Error Summary</h2>
+<div class="card">
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">semver/goose</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-green" style="width: 100%;">0 errors &mdash; Clean build</div>
+    </div>
+  </div>
+</div>
+<p style="color:var(--text-muted); font-size:13px; margin-top:8px;">
+  TypeScript compilation passed with zero errors. Vite build completed in 2.62s, producing 683.77 kB JS bundle.
+</p>
+</div>
+
+<!-- 5. SCORING TABLES -->
+<h2 id="scoring">Scoring Tables</h2>
+
+<h3>Summary by Category</h3>
+<div class="card">
+<table>
+<thead>
+<tr><th>Category</th><th>Max Points</th><th>Score</th><th>%</th><th>Rating</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>1. Migration Completeness</strong></td><td>255</td><td>199</td><td>78%</td><td><span class="badge badge-orange">Good</span></td></tr>
+<tr><td>&nbsp;&nbsp;Fully correct (score 3)</td><td>168</td><td>168</td><td>100%</td><td><span class="badge badge-green">56 cases</span></td></tr>
+<tr><td>&nbsp;&nbsp;Partially correct (score 2)</td><td>36</td><td>24</td><td>67%</td><td><span class="badge badge-orange">12 cases</span></td></tr>
+<tr><td>&nbsp;&nbsp;Partially correct (score 1)</td><td>21</td><td>7</td><td>33%</td><td><span class="badge badge-orange">7 cases</span></td></tr>
+<tr><td>&nbsp;&nbsp;Wrong or missed (score 0)</td><td>30</td><td>0</td><td>0%</td><td><span class="badge badge-red">10 cases</span></td></tr>
+<tr style="font-weight:700; background:var(--surface2);">
+<td><strong>2. Build / Compile</strong></td><td>10</td><td>10</td><td>100%</td><td><span class="badge badge-green">Pass</span></td></tr>
+<tr><td><strong>3. Scope Discipline</strong></td><td>10</td><td>8</td><td>80%</td><td><span class="badge badge-green">Good</span></td></tr>
+<tr><td><strong>4. Functional Preservation</strong></td><td>10</td><td>6</td><td>60%</td><td><span class="badge badge-orange">Fair</span></td></tr>
+<tr><td><strong>5. PF6 Correctness</strong></td><td>10</td><td>7</td><td>70%</td><td><span class="badge badge-orange">Fair</span></td></tr>
+<tr><td><strong>6. Risk / Maintainability</strong></td><td>10</td><td>7</td><td>70%</td><td><span class="badge badge-orange">Fair</span></td></tr>
+<tr style="font-weight:700; background:var(--surface2);">
+<td><strong>TOTAL (Normalized to /10)</strong></td><td>10</td><td colspan="3" style="font-size:24px; text-align:center; color:var(--orange);">7.8 / 10</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Detailed Breakdown &mdash; All 85 Test Cases</h3>
+<div class="card" style="overflow-x:auto;">
+<table>
+<thead>
+<tr><th>TC</th><th>Component</th><th>Score</th><th>vs Codemods</th><th>Assessment</th></tr>
+</thead>
+<tbody>
+<tr><td>TC001</td><td>Accordion isHidden</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed isHidden + isExpanded from toggle correctly</td></tr>
+<tr><td>TC002</td><td>Accordion item markup</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed isExpanded from toggle (correct for related TC003)</td></tr>
+<tr><td>TC003</td><td>Accordion toggle isExpanded</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Moved isExpanded from AccordionToggle to AccordionItem</td></tr>
+<tr><td>TC004</td><td>data-codemods cleanup</td><td><span class="badge badge-orange">2</span></td><td>n/a</td><td>Not touched; meta-test, acceptable per scoring guidance</td></tr>
+<tr><td>TC005</td><td>Avatar border</td><td><span class="badge badge-orange">1</span></td><td>worse</td><td>Removed <code>border</code> but didn&rsquo;t replace with <code>isBordered</code>. Codemods maps to <code>isBordered</code></td></tr>
+<tr><td>TC006</td><td>Banner variant</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Removed all variant props entirely; should map to <code>color</code> or <code>status</code>. Lost semantic meaning</td></tr>
+<tr><td>TC007</td><td>Button icon to prop</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Not changed. Icons must move from children to <code>icon</code> prop</td></tr>
+<tr><td>TC008</td><td>Button isActive</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Removed <code>isActive</code> instead of renaming to <code>isClicked</code>. Lost behavior</td></tr>
+<tr><td>TC009</td><td>Card raised props</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Migrated to new selectableActions API correctly (codemods just removes old props)</td></tr>
+<tr><td>TC010</td><td>Card selectable actions</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Not changed. selectableActions on CardHeader needs updates</td></tr>
+<tr><td>TC011</td><td>Checkbox label position</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Removed <code>isLabelBeforeButton</code> without adding <code>labelPosition=&quot;start&quot;</code></td></tr>
+<tr><td>TC012</td><td>Chip deprecated</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Replaced Chip/ChipGroup with Label/LabelGroup (preferred over deprecated import)</td></tr>
+<tr><td>TC013</td><td>Chip to Label</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Correct Label/LabelGroup replacement</td></tr>
+<tr><td>TC014</td><td>Color props</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>cyan&rarr;teal, gold&rarr;yellow correctly</td></tr>
+<tr><td>TC015</td><td>ContentHeader rename</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>ContentHeader &rarr; PageHeader correctly</td></tr>
+<tr><td>TC016</td><td>DataList action</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Removed isPlainButtonAction correctly; also removed DataListItemCells (over-corrected)</td></tr>
+<tr><td>TC017</td><td>Deprecated components</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Migrated old Dropdown to new PF6 Dropdown+MenuToggle (codemods only stubs)</td></tr>
+<tr><td>TC018</td><td>DragDrop deprecated</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Moved to deprecated import path</td></tr>
+<tr><td>TC019</td><td>Drawer hasNoPadding</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Removed hasNoPadding correctly; added unnecessary DrawerActions/CloseButton</td></tr>
+<tr><td>TC020</td><td>Drawer colorVariant</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>light-200 &rarr; secondary correctly</td></tr>
+<tr><td>TC021</td><td>Drawer content color</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>no-background &rarr; default (acceptable, primary also valid)</td></tr>
+<tr><td>TC022</td><td>Drawer head panelbody</td><td><span class="badge badge-orange">1</span></td><td>n/a</td><td>No code changes needed; added unnecessary DrawerActions/CloseButton</td></tr>
+<tr><td>TC023</td><td>DualListSelector deprecated</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Moved to deprecated import path</td></tr>
+<tr><td>TC024</td><td>DualListSelector next</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Moved to deprecated (reasonable for old API, not ideal per TC spec)</td></tr>
+<tr><td>TC025</td><td>Duplicate imports</td><td><span class="badge badge-orange">2</span></td><td>n/a</td><td>Design limitation; cannot be properly evaluated</td></tr>
+<tr><td>TC026</td><td>EmptyState exports</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed EmptyStateHeader/Icon, moved props to EmptyState</td></tr>
+<tr><td>TC027</td><td>EmptyState header</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Excellent restructuring to new EmptyState API</td></tr>
+<tr><td>TC028</td><td>ErrorState props</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>errorTitle &rarr; titleText, errorDescription &rarr; bodyText</td></tr>
+<tr><td>TC029</td><td>FormField typo</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Not changed. Must fix FormFiledGroup... typo to FormFieldGroup...</td></tr>
+<tr><td>TC030</td><td>FormGroup labelIcon</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>labelIcon &rarr; labelHelp correctly</td></tr>
+<tr><td>TC031</td><td>HelperTextItem hasIcon</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed hasIcon and isDynamic correctly</td></tr>
+<tr><td>TC032</td><td>HelperTextItem screenreader</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC033</td><td>InvalidObject props</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Renamed to MissingPage + prop renames (combined TC033+TC047)</td></tr>
+<tr><td>TC034</td><td>JumpLinksItem href</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>Added required href prop</td></tr>
+<tr><td>TC035</td><td>JumpLinksItem markup</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC036</td><td>KebabToggle removed</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Full migration to MenuToggle variant=&quot;plain&quot; with EllipsisVIcon</td></tr>
+<tr><td>TC037</td><td>Label overflow</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>isOverflowLabel replaced with isClickable (wrong; should be variant=&quot;overflow&quot;)</td></tr>
+<tr><td>TC038</td><td>LogSnippet variant</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>leftBorderVariant &rarr; variant={AlertVariant.danger}</td></tr>
+<tr><td>TC039</td><td>LogViewer stylesheet</td><td><span class="badge badge-red">0</span></td><td>n/a</td><td>Not changed. CSS import path needs updating</td></tr>
+<tr><td>TC040</td><td>Login footer links</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Restructured to use children with anchor tag</td></tr>
+<tr><td>TC041</td><td>Login main header</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC042</td><td>Masthead brand/logo</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Added MastheadMain &gt; MastheadBrand &gt; MastheadLogo structure</td></tr>
+<tr><td>TC043</td><td>Masthead bgcolor</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed backgroundColor prop</td></tr>
+<tr><td>TC044</td><td>Masthead structure</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Added MastheadLogo wrapper inside MastheadBrand</td></tr>
+<tr><td>TC045</td><td>MenuItemAction markup</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC046</td><td>MenuToggle icon</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Not changed. Icons must move from children to icon prop</td></tr>
+<tr><td>TC047</td><td>Missing page</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>InvalidObject &rarr; MissingPage with prop renames</td></tr>
+<tr><td>TC048</td><td>Modal deprecated</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Full migration to new Modal API (ModalHeader/Body/Footer)</td></tr>
+<tr><td>TC049</td><td>Modal next</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Updated to ModalHeader/ModalBody structure</td></tr>
+<tr><td>TC050</td><td>MultiContentCard props</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Removed old props; added withDividers (acceptable but not exact spec)</td></tr>
+<tr><td>TC051</td><td>Nav tertiary</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>variant=&quot;tertiary&quot; &rarr; variant=&quot;horizontal-subnav&quot;</td></tr>
+<tr><td>TC052</td><td>Nav theme</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed theme prop</td></tr>
+<tr><td>TC053</td><td>NavItem wrapper</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Removed hasNavLinkWrapper but didn&rsquo;t move icon to icon prop</td></tr>
+<tr><td>TC054</td><td>NotAuthorized props</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Renamed to UnauthorizedAccess + titleText/bodyText</td></tr>
+<tr><td>TC055</td><td>NotificationBadge markup</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC056</td><td>NotificationDrawer header</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC057</td><td>Page header &rarr; masthead</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>header &rarr; masthead prop rename</td></tr>
+<tr><td>TC058</td><td>Page tertiaryNav grouped</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>isTertiaryNavGrouped &rarr; isHorizontalSubnavGrouped</td></tr>
+<tr><td>TC059</td><td>Page tertiaryNav width</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>isTertiaryNavWidthLimited &rarr; isHorizontalSubnavWidthLimited</td></tr>
+<tr><td>TC060</td><td>Page tertiaryNav</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>tertiaryNav &rarr; horizontalSubnav + Nav variant fixed</td></tr>
+<tr><td>TC061</td><td>Page body wrapper</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC062</td><td>PageSection bodyWrapper</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>variant=&quot;light&quot; &rarr; &quot;secondary&quot; (should be &quot;default&quot;); no hasBodyWrapper</td></tr>
+<tr><td>TC063</td><td>PageHeader tools isSelected</td><td><span class="badge badge-orange">2</span></td><td>n/a</td><td>Design limitation; uses placeholder div</td></tr>
+<tr><td>TC064</td><td>PageNavigation removed</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed PageNavigation wrapper, kept Nav inline</td></tr>
+<tr><td>TC065</td><td>PageSection nav type</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed type=&quot;nav&quot;</td></tr>
+<tr><td>TC066</td><td>PageSection variant</td><td><span class="badge badge-orange">1</span></td><td>worse</td><td>All variants mapped to &quot;secondary&quot;; variant=&quot;light&quot; should be &quot;default&quot;</td></tr>
+<tr><td>TC067</td><td>PageSection variant/type</td><td><span class="badge badge-orange">1</span></td><td>worse</td><td>variant=&quot;light&quot; &rarr; &quot;secondary&quot; (should be &quot;default&quot;)</td></tr>
+<tr><td>TC068</td><td>PageSidebar theme</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed theme prop</td></tr>
+<tr><td>TC069</td><td>Pagination markup</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC070</td><td>Popper appendTo</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Full migration from deprecated Select to new Select+MenuToggle</td></tr>
+<tr><td>TC071</td><td>SimpleFileUpload aria</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC072</td><td>Slider CSS variable</td><td><span class="badge badge-orange">1</span></td><td>n/a</td><td>Updated pf-v5&rarr;pf-v6 prefix but didn&rsquo;t rename --Left to --InsetInlineStart</td></tr>
+<tr><td>TC073</td><td>Switch labelOff</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Removed labelOff prop</td></tr>
+<tr><td>TC074</td><td>Tabs isSecondary</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>isSecondary &rarr; isSubtab</td></tr>
+<tr><td>TC075</td><td>Tabs light300</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>variant=&quot;light300&quot; &rarr; variant=&quot;secondary&quot;</td></tr>
+<tr><td>TC076</td><td>Tabs scroll markup</td><td><span class="badge badge-green">3</span></td><td>n/a</td><td>No changes needed; correctly left unchanged</td></tr>
+<tr><td>TC077</td><td>Text to Content</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>Excellent Text/TextContent &rarr; Content migration</td></tr>
+<tr><td>TC078</td><td>Th CSS variables</td><td><span class="badge badge-orange">1</span></td><td>n/a</td><td>Updated pf-v5&rarr;pf-v6 but didn&rsquo;t rename --Left/--Right to --InsetInline*</td></tr>
+<tr><td>TC079</td><td>Tile deprecated</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Replaced Tile with Card; kept title as prop (Card uses CardTitle)</td></tr>
+<tr><td>TC080</td><td>Tokens prefix</td><td><span class="badge badge-green">3</span></td><td>better</td><td>Mapped to correct PF6 token names (spacer_300, text_color_regular)</td></tr>
+<tr><td>TC081</td><td>Tokens CSS</td><td><span class="badge badge-orange">2</span></td><td>equal</td><td>Updated prefix to pf-t; naming partially correct</td></tr>
+<tr><td>TC082</td><td>Toolbar props removed</td><td><span class="badge badge-orange">1</span></td><td>worse</td><td>usePageInsets &rarr; hasNoPadding (wrong; should just remove)</td></tr>
+<tr><td>TC083</td><td>Toolbar chip to label</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>chips/deleteChip/deleteChipGroup &rarr; labels/deleteLabel/deleteLabelGroup</td></tr>
+<tr><td>TC084</td><td>Toolbar interface rename</td><td><span class="badge badge-red">0</span></td><td>worse</td><td>Not changed. ToolbarChipGroup &rarr; ToolbarLabelGroup, etc.</td></tr>
+<tr><td>TC085</td><td>Toolbar spacer removed</td><td><span class="badge badge-green">3</span></td><td>equal</td><td>spacer &rarr; gap correctly</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Score Distribution</h3>
+<div class="card">
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">Score 3 (Correct)</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-green" style="width: 65.9%;">56 cases (65.9%)</div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Score 2 (Partial)</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-orange" style="width: 14.1%;">12 cases (14.1%)</div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Score 1 (Partial)</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-orange" style="width: 8.2%;">7 cases (8.2%)</div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Score 0 (Wrong/Miss)</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-red" style="width: 11.8%;">10 cases (11.8%)</div>
+    </div>
+  </div>
+</div>
+
+<h4 style="margin-top:16px;">vs pf-codemods Comparison</h4>
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">Better</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-teal" style="width: 11.8%;">10 cases</div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Equal</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-green" style="width: 48.2%;">41 cases</div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Worse</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-red" style="width: 16.5%;">14 cases</div>
+    </div>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">N/A</span>
+    <div class="bar-track">
+      <div class="bar-fill bar-purple" style="width: 23.5%;">20 cases</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 6. DETAILED ANALYSIS -->
+<h2 id="detailed">Detailed Analysis</h2>
+
+<details>
+<summary>Package Upgrades</summary>
+<div class="detail-content">
+<h4>What changed in PF6</h4>
+<p>All @patternfly packages must upgrade from 5.x to 6.x. The new DragDrop functionality is in a separate <code>@patternfly/react-drag-drop</code> package.</p>
+
+<h4>Migration branch changes</h4>
+<table>
+<tr><th>Package</th><th>PF5 (main)</th><th>PF6 (migration)</th><th>Correct?</th></tr>
+<tr><td>@patternfly/react-core</td><td>5.3.4</td><td>^6.4.1</td><td><span class="badge badge-green">Yes</span></td></tr>
+<tr><td>@patternfly/react-table</td><td>5.3.4</td><td>^6.4.1</td><td><span class="badge badge-green">Yes</span></td></tr>
+<tr><td>@patternfly/react-icons</td><td>5.3.2</td><td>^6.4.0</td><td><span class="badge badge-green">Yes</span></td></tr>
+<tr><td>@patternfly/react-tokens</td><td>5.3.1</td><td>^6.4.0</td><td><span class="badge badge-green">Yes</span></td></tr>
+<tr><td>@patternfly/react-component-groups</td><td>5.4.0</td><td>^6.4.0</td><td><span class="badge badge-green">Yes</span></td></tr>
+<tr><td>@patternfly/react-styles</td><td>5.3.1</td><td>^6.4.0</td><td><span class="badge badge-green">Yes</span></td></tr>
+<tr><td>@patternfly/react-drag-drop</td><td>&mdash;</td><td>^6.4.1 (dev)</td><td><span class="badge badge-green">Yes</span></td></tr>
+</table>
+
+<p><strong>Note:</strong> Uses <code>^</code> caret ranges rather than pinned versions. The baseline uses <code>^6.0.0</code>. Both approaches are acceptable. The migration branch uses newer 6.4.x versions.</p>
+<p><span class="badge badge-green">Package Score: 3/3</span></p>
+</div>
+</details>
+
+<details>
+<summary>Accordion (TC001-TC003) &mdash; <span class="badge badge-green">3/3</span></summary>
+<div class="detail-content">
+<h4>PF6 change</h4>
+<p><code>isHidden</code> removed from AccordionContent, <code>isExpanded</code> moved from AccordionToggle to AccordionItem.</p>
+<h4>Before (PF5)</h4>
+<pre><code>&lt;AccordionItem&gt;
+  &lt;AccordionToggle isExpanded={expanded}&gt;...&lt;/AccordionToggle&gt;
+  &lt;AccordionContent isHidden={!expanded}&gt;...&lt;/AccordionContent&gt;
+&lt;/AccordionItem&gt;</code></pre>
+<h4>After (migration branch)</h4>
+<pre><code>&lt;AccordionItem isExpanded={expanded}&gt;
+  &lt;AccordionToggle&gt;...&lt;/AccordionToggle&gt;
+  &lt;AccordionContent&gt;...&lt;/AccordionContent&gt;
+&lt;/AccordionItem&gt;</code></pre>
+<p>All three accordion test cases handled correctly.</p>
+</div>
+</details>
+
+<details>
+<summary>EmptyState (TC026-TC027) &mdash; <span class="badge badge-green">3/3</span></summary>
+<div class="detail-content">
+<h4>PF6 change</h4>
+<p>EmptyStateHeader and EmptyStateIcon removed. Their props (titleText, headingLevel, icon) move directly to EmptyState.</p>
+<h4>Before (PF5)</h4>
+<pre><code>&lt;EmptyState&gt;
+  &lt;EmptyStateIcon icon={SearchIcon} /&gt;
+  &lt;Title headingLevel="h2"&gt;No results&lt;/Title&gt;
+  &lt;EmptyStateBody&gt;...&lt;/EmptyStateBody&gt;
+&lt;/EmptyState&gt;</code></pre>
+<h4>After (migration branch)</h4>
+<pre><code>&lt;EmptyState icon={SearchIcon} headingLevel="h2" titleText="No results"&gt;
+  &lt;EmptyStateBody&gt;...&lt;/EmptyStateBody&gt;
+&lt;/EmptyState&gt;</code></pre>
+<p>Excellent restructuring. Imports cleaned up properly.</p>
+</div>
+</details>
+
+<details>
+<summary>Modal (TC048-TC049) &mdash; <span class="badge badge-green">3/3</span></summary>
+<div class="detail-content">
+<h4>PF6 change</h4>
+<p>Old Modal API (title prop, actions prop) replaced with compositional ModalHeader/ModalBody/ModalFooter children.</p>
+<h4>Before (PF5)</h4>
+<pre><code>&lt;Modal title="Title" actions={[...]} isOpen={isOpen}&gt;
+  Body content
+&lt;/Modal&gt;</code></pre>
+<h4>After (migration branch)</h4>
+<pre><code>&lt;Modal isOpen={isOpen} onClose={...}&gt;
+  &lt;ModalHeader title="Title" /&gt;
+  &lt;ModalBody&gt;Body content&lt;/ModalBody&gt;
+  &lt;ModalFooter&gt;...buttons...&lt;/ModalFooter&gt;
+&lt;/Modal&gt;</code></pre>
+<p>Full migration to new compositional API. This exceeds what pf-codemods does (which just moves to deprecated import).</p>
+</div>
+</details>
+
+<details>
+<summary>Dropdown / KebabToggle / Select (TC017, TC036, TC070) &mdash; <span class="badge badge-green">3/3</span></summary>
+<div class="detail-content">
+<h4>PF6 change</h4>
+<p>Old Dropdown/KebabToggle/Select fully removed. Replaced with new Dropdown+MenuToggle pattern and new Select+MenuToggle+SelectList pattern.</p>
+<h4>Migration branch</h4>
+<p>All three fully migrated to the new PF6 API pattern with MenuToggle, toggle render function, DropdownList/SelectList, and onOpenChange. This is the <strong>best performance</strong> area for this branch &mdash; pf-codemods only stubs these components.</p>
+</div>
+</details>
+
+<details>
+<summary style="color:var(--red);">ISSUES: Props Removed Instead of Renamed (TC005, TC006, TC008, TC011, TC037)</summary>
+<div class="detail-content">
+<h4>Pattern of failure</h4>
+<p>The tool frequently <strong>removes</strong> deprecated props instead of mapping them to their PF6 replacements, losing semantic meaning.</p>
+<table>
+<tr><th>TC</th><th>Component</th><th>What was removed</th><th>What should replace it</th><th>Impact</th></tr>
+<tr><td>TC005</td><td>Avatar</td><td><code>border="dark"</code></td><td><code>isBordered</code></td><td>Lost border styling</td></tr>
+<tr><td>TC006</td><td>Banner</td><td><code>variant="gold|red|blue|green"</code></td><td><code>color="yellow|red|blue|green"</code> or <code>status="warning|danger|info|success"</code></td><td>All banners become identical unstyled</td></tr>
+<tr><td>TC008</td><td>Button</td><td><code>isActive</code></td><td><code>isClicked</code></td><td>Lost active/clicked visual state</td></tr>
+<tr><td>TC011</td><td>Checkbox</td><td><code>isLabelBeforeButton</code></td><td><code>labelPosition="start"</code></td><td>Label positioning lost</td></tr>
+<tr><td>TC037</td><td>Label</td><td><code>isOverflowLabel</code></td><td><code>variant="overflow"</code></td><td>Wrong: used isClickable instead</td></tr>
+</table>
+<p>This is the most significant systematic issue. The tool recognizes that these props are invalid in PF6 but fails to map them to their replacements.</p>
+</div>
+</details>
+
+<details>
+<summary style="color:var(--red);">ISSUES: Missed Test Cases (TC007, TC010, TC029, TC039, TC046, TC084)</summary>
+<div class="detail-content">
+<h4>Completely untouched files that needed changes</h4>
+<table>
+<tr><th>TC</th><th>Component</th><th>What&rsquo;s needed</th><th>fixedWithCodemods</th></tr>
+<tr><td>TC007</td><td>Button icon to prop</td><td>Move icon from children to <code>icon</code> prop</td><td>Yes</td></tr>
+<tr><td>TC010</td><td>Card selectable actions</td><td>Remove old selectableActions pattern from CardHeader</td><td>Yes</td></tr>
+<tr><td>TC029</td><td>FormField typo</td><td>Rename FormFiledGroup... to FormFieldGroup...</td><td>Yes</td></tr>
+<tr><td>TC039</td><td>LogViewer stylesheet</td><td>Update CSS import path for LogViewer</td><td>No</td></tr>
+<tr><td>TC046</td><td>MenuToggle icon</td><td>Move icon from children to <code>icon</code> prop</td><td>Yes</td></tr>
+<tr><td>TC084</td><td>Toolbar interface rename</td><td>ToolbarChipGroup &rarr; ToolbarLabelGroup</td><td>Yes</td></tr>
+</table>
+<p>5 of these 6 are fixedWithCodemods=true, meaning pf-codemods handles them but this tool missed them entirely.</p>
+</div>
+</details>
+
+<details>
+<summary style="color:var(--orange);">ISSUES: PageSection variant Mapping (TC062, TC066, TC067)</summary>
+<div class="detail-content">
+<h4>The issue</h4>
+<p>PF6 PageSection accepts only <code>variant="default"</code> or <code>variant="secondary"</code>. The correct mapping is:</p>
+<ul>
+<li><code>variant="light"</code> &rarr; <code>variant="default"</code></li>
+<li><code>variant="dark"</code> / <code>variant="darker"</code> &rarr; <code>variant="secondary"</code></li>
+</ul>
+<p>The migration branch maps <strong>all</strong> variants to <code>"secondary"</code>, which is wrong for <code>variant="light"</code> (should be <code>"default"</code>).</p>
+<p>This is a semantic error &mdash; light/default sections will render with secondary (darker) styling.</p>
+</div>
+</details>
+
+<details>
+<summary style="color:var(--orange);">ISSUES: CSS Variable Renames Not Completed (TC072, TC078)</summary>
+<div class="detail-content">
+<h4>The issue</h4>
+<p>CSS class prefixes were updated from <code>pf-v5</code> to <code>pf-v6</code> correctly. However, the actual CSS variable property names were not updated:</p>
+<table>
+<tr><th>TC</th><th>Updated</th><th>Still needed</th></tr>
+<tr><td>TC072</td><td><code>pf-v5</code> &rarr; <code>pf-v6</code></td><td><code>--Left</code> &rarr; <code>--InsetInlineStart</code></td></tr>
+<tr><td>TC078</td><td><code>pf-v5</code> &rarr; <code>pf-v6</code></td><td><code>--Left</code> &rarr; <code>--InsetInlineStart</code>, <code>--Right</code> &rarr; <code>--InsetInlineEnd</code></td></tr>
+</table>
+<p>The prefix update is correct but incomplete. The RTL-compatible renames are part of PF6&rsquo;s CSS modernization.</p>
+</div>
+</details>
+
+<details>
+<summary>Text to Content (TC077) &mdash; <span class="badge badge-green">3/3</span></summary>
+<div class="detail-content">
+<h4>PF6 change</h4>
+<p>Text, TextContent, TextList, TextListItem all replaced by a single Content component.</p>
+<h4>Migration branch</h4>
+<pre><code class="diff-rem">- import { Text, TextContent, TextList, TextListItem, TextVariants }</code>
+<code class="diff-add">+ import { Content, ContentVariants }</code>
+
+<code class="diff-rem">- &lt;TextContent&gt;</code>
+<code class="diff-rem">-   &lt;Text component={TextVariants.h1}&gt;Heading&lt;/Text&gt;</code>
+<code class="diff-add">+ &lt;Content&gt;</code>
+<code class="diff-add">+   &lt;Content component={ContentVariants.h1}&gt;Heading&lt;/Content&gt;</code></pre>
+<p>Clean migration with correct component and variant usage.</p>
+</div>
+</details>
+
+<details>
+<summary>Toolbar (TC082-TC085) &mdash; Mixed Results</summary>
+<div class="detail-content">
+<table>
+<tr><th>TC</th><th>Score</th><th>Detail</th></tr>
+<tr><td>TC082</td><td><span class="badge badge-orange">1</span></td><td>usePageInsets incorrectly replaced with hasNoPadding instead of just removed</td></tr>
+<tr><td>TC083</td><td><span class="badge badge-green">3</span></td><td>Chip&rarr;Label prop renames all correct</td></tr>
+<tr><td>TC084</td><td><span class="badge badge-red">0</span></td><td>Missed: ToolbarChipGroup/ToolbarChip interface renames</td></tr>
+<tr><td>TC085</td><td><span class="badge badge-green">3</span></td><td>spacer&rarr;gap correctly with proper value names</td></tr>
+</table>
+</div>
+</details>
+
+<details>
+<summary>CSS / Token Migration (TC072, TC078, TC080, TC081) &mdash; Mixed</summary>
+<div class="detail-content">
+<table>
+<tr><th>TC</th><th>Score</th><th>Detail</th></tr>
+<tr><td>TC072</td><td><span class="badge badge-orange">1</span></td><td>Prefix updated; --Left not renamed to --InsetInlineStart</td></tr>
+<tr><td>TC078</td><td><span class="badge badge-orange">1</span></td><td>Prefix updated; --Left/--Right not renamed to --InsetInline*</td></tr>
+<tr><td>TC080</td><td><span class="badge badge-green">3</span></td><td>Excellent: global_spacer_md &rarr; t_global_spacer_300, color token correctly mapped</td></tr>
+<tr><td>TC081</td><td><span class="badge badge-orange">2</span></td><td>CSS tokens updated to pf-t prefix; naming partially correct</td></tr>
+</table>
+<p>React token migration (TC080) is excellent. CSS variable migration (TC072, TC078) is incomplete. CSS design token migration (TC081) is partially correct.</p>
+</div>
+</details>
+
+<!-- 7. BUILD RESULTS -->
+<h2 id="build-results">Build Results</h2>
+<div class="card">
+<h3>semver/goose/050626-2037 <span class="badge badge-green">BUILD SUCCESS</span></h3>
+<table>
+<tr><th>Phase</th><th>Result</th><th>Details</th></tr>
+<tr><td>npm install</td><td><span class="badge badge-green">Pass</span></td><td>122 packages, 2 moderate vulnerabilities (non-blocking)</td></tr>
+<tr><td>tsc -b (TypeScript)</td><td><span class="badge badge-green">Pass</span></td><td>Zero errors</td></tr>
+<tr><td>vite build</td><td><span class="badge badge-green">Pass</span></td><td>9,042 modules transformed, 2.62s</td></tr>
+</table>
+
+<h4>Build Output</h4>
+<table>
+<tr><th>File</th><th>Size</th><th>Gzip</th></tr>
+<tr><td>dist/assets/index.css</td><td>1,343.11 kB</td><td>114.55 kB</td></tr>
+<tr><td>dist/assets/index.js</td><td>683.77 kB</td><td>201.47 kB</td></tr>
+<tr><td>dist/index.html</td><td>0.40 kB</td><td>&mdash;</td></tr>
+</table>
+
+<div class="progress-bar" style="margin-top: 16px;">
+  <div class="progress-segment" style="width: 100%; background: var(--green);" title="Build pass"></div>
+</div>
+<p style="font-size:13px; color:var(--text-muted);">Build progress: <span style="color:var(--green);">100% success</span></p>
+
+<h4 style="margin-top: 16px;">Error Summary</h4>
+<table>
+<tr><th>Error Type</th><th>Count</th><th>Root Cause</th></tr>
+<tr><td>TypeScript errors</td><td>0</td><td>&mdash;</td></tr>
+<tr><td>Missing imports</td><td>0</td><td>&mdash;</td></tr>
+<tr><td>PF6 migration errors</td><td>0</td><td>&mdash;</td></tr>
+<tr><td>Runtime warnings</td><td>0</td><td>&mdash;</td></tr>
+<tr style="font-weight:700;"><td><strong>Total</strong></td><td><strong>0</strong></td><td>&mdash;</td></tr>
+</table>
+</div>
+
+<!-- 8. RISK & MAINTAINABILITY -->
+<h2 id="risk">Risk &amp; Maintainability</h2>
+<div class="card-grid">
+  <div class="card">
+    <div class="metric">
+      <div class="value" style="color:var(--orange);">10</div>
+      <div class="label">Incorrect Prop Removals</div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted);">Props removed instead of renamed/replaced. These cause <strong>silent behavioral regressions</strong> &mdash; the code compiles but the UI behaves differently than intended.</p>
+  </div>
+  <div class="card">
+    <div class="metric">
+      <div class="value" style="color:var(--green);">0</div>
+      <div class="label">Remaining pf-v5 CSS Classes</div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted);">All pf-v5 class prefixes updated to pf-v6 or pf-t. No stale CSS references.</p>
+  </div>
+  <div class="card">
+    <div class="metric">
+      <div class="value" style="color:var(--green);">Aligned</div>
+      <div class="label">Package Version Alignment</div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted);">All @patternfly packages at consistent 6.4.x versions. react-drag-drop added for deprecated DragDrop support.</p>
+  </div>
+  <div class="card">
+    <div class="metric">
+      <div class="value" style="color:var(--orange);">Medium</div>
+      <div class="label">Runtime Risk</div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted);">Banner colors lost, Button active state lost, Checkbox label position lost, Label overflow wrong, PageSection variants mis-mapped. These will be visible to users.</p>
+  </div>
+  <div class="card">
+    <div class="metric">
+      <div class="value" style="color:var(--orange);">~17</div>
+      <div class="label">Items Needing Manual Review</div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted);">10 wrong/missed cases + 7 partially correct cases need manual attention before merge.</p>
+  </div>
+  <div class="card">
+    <div class="metric">
+      <div class="value" style="color:var(--green);">Low</div>
+      <div class="label">Unnecessary Code Churn</div>
+    </div>
+    <p style="font-size:13px; color:var(--text-muted);">Minor additions (DrawerActions/CloseButton in TC019, TC022) but generally focused diffs. No unrelated refactors.</p>
+  </div>
+</div>
+
+<!-- 9. FINAL TOTALS & RECOMMENDATION -->
+<h2 id="final">Final Totals &amp; Recommendation</h2>
+<div class="card verdict" style="border-color:var(--orange);">
+<h3>Final Score</h3>
+<table>
+<tr><th>Category</th><th>Weight</th><th>Score</th><th>Weighted</th></tr>
+<tr><td>Migration Completeness (199/255)</td><td>50%</td><td>78.0%</td><td>3.90</td></tr>
+<tr><td>Build / Compile (0 errors)</td><td>15%</td><td>100%</td><td>1.50</td></tr>
+<tr><td>Scope Discipline</td><td>10%</td><td>80%</td><td>0.80</td></tr>
+<tr><td>Functional Preservation</td><td>10%</td><td>60%</td><td>0.60</td></tr>
+<tr><td>PF6 Correctness</td><td>10%</td><td>70%</td><td>0.70</td></tr>
+<tr><td>Risk / Maintainability</td><td>5%</td><td>70%</td><td>0.35</td></tr>
+<tr style="font-weight:700; background:var(--surface2);"><td><strong>TOTAL</strong></td><td>100%</td><td colspan="2" style="font-size:24px; text-align:center; color:var(--orange);"><strong>7.85 / 10</strong></td></tr>
+</table>
+
+<h3 style="margin-top: 24px;">Recommendation: <span class="badge badge-orange">FIX BEFORE SHIP</span></h3>
+<p>This migration is <strong>good but not ship-ready</strong>. The clean build is impressive, and 66% of test cases are fully correct. However, the pattern of deleting props instead of renaming them introduces silent behavioral regressions that will be visible to users.</p>
+
+<h4>Remaining Work (Priority Order)</h4>
+<table>
+<tr><th>#</th><th>Fix</th><th>Impact</th><th>Effort</th></tr>
+<tr><td>1</td><td>TC006: Add <code>color</code> or <code>status</code> to Banner components</td><td>High &mdash; all banners currently unstyled</td><td>Low</td></tr>
+<tr><td>2</td><td>TC008: Rename <code>isActive</code> to <code>isClicked</code> on Button</td><td>Medium</td><td>Low</td></tr>
+<tr><td>3</td><td>TC011: Add <code>labelPosition="start"</code> to Checkbox</td><td>Medium</td><td>Low</td></tr>
+<tr><td>4</td><td>TC005: Add <code>isBordered</code> to Avatar</td><td>Low</td><td>Low</td></tr>
+<tr><td>5</td><td>TC037: Replace <code>isClickable</code> with <code>variant="overflow"</code> on Label</td><td>Medium</td><td>Low</td></tr>
+<tr><td>6</td><td>TC007, TC046: Move icons from children to <code>icon</code> prop on Button/MenuToggle</td><td>Medium</td><td>Low</td></tr>
+<tr><td>7</td><td>TC066-67: Fix PageSection variant mapping (light &rarr; default, not secondary)</td><td>Medium</td><td>Low</td></tr>
+<tr><td>8</td><td>TC082: Remove <code>hasNoPadding</code> from Toolbar (just remove <code>usePageInsets</code>)</td><td>Low</td><td>Low</td></tr>
+<tr><td>9</td><td>TC029: Rename FormFiledGroup typo to FormFieldGroup</td><td>Low</td><td>Low</td></tr>
+<tr><td>10</td><td>TC084: Rename ToolbarChipGroup &rarr; ToolbarLabelGroup interfaces</td><td>Low</td><td>Low</td></tr>
+<tr><td>11</td><td>TC072, TC078: Complete CSS variable renames (--Left &rarr; --InsetInlineStart)</td><td>Low</td><td>Low</td></tr>
+<tr><td>12</td><td>TC010: Update CardHeader selectableActions</td><td>Low</td><td>Medium</td></tr>
+<tr><td>13</td><td>TC039: Update LogViewer CSS import path</td><td>Low</td><td>Low</td></tr>
+</table>
+
+<p style="margin-top: 16px; color:var(--text-muted);">All remaining fixes are low effort. Estimated total: 1-2 hours of manual work to bring this to a 9.5+/10 score.</p>
+</div>
+
+<!-- 10. FOOTER -->
+<footer id="footer">
+<p>Generated: 2026-05-07 | Evaluated against 85 PatternFly 6 breaking changes</p>
+<p>
+  <a href="https://www.patternfly.org/get-started/upgrade/">PatternFly Upgrade Guide</a> &middot;
+  <a href="https://www.patternfly.org/tokens/all-patternfly-tokens/">Tokens Documentation</a> &middot;
+  <a href="https://www.patternfly.org/get-started/upgrade/release-notes/">Release Notes</a>
+</p>
+</footer>
+
+</div>
+</body>
+</html>
