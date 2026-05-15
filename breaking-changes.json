@@ -53,11 +53,11 @@
     "id": "TC006",
     "component": "Banner",
     "repo": "React",
-    "description": "The variant property has been removed from Banner. Use the new color or status properties instead.",
+    "description": "The variant property has been removed from Banner. Use the new color or status properties instead. The 'gold' variant value maps to color='yellow' in PF6.",
     "prLink": "https://github.com/patternfly/patternfly-react/pull/9891",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC006-banner-variant.tsx",
-    "expectedOutcome": "Replace variant prop with either color or status prop on Banner. Both are valid PF6 APIs: status='warning' adds a status icon, color='gold' just sets the color. Using color is acceptable (score 3), using status is also correct (score 3). Either approach is a valid migration."
+    "expectedOutcome": "Replace variant prop with color prop on Banner: variant='gold' becomes color='yellow' (gold renamed to yellow in PF6), variant='red' becomes color='red', variant='blue' becomes color='blue', variant='green' becomes color='green'. Using status prop instead of color is also acceptable (score 3)."
   },
   {
     "id": "TC007",
