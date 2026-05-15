@@ -133,11 +133,11 @@
     "id": "TC014",
     "component": "Color props",
     "repo": "React",
-    "description": "Banner and Label color prop updated: 'cyan' replaced with 'teal', 'gold' replaced with 'yellow'.",
+    "description": "Label color prop values renamed: 'cyan' replaced with 'teal', 'gold' replaced with 'yellow'.",
     "prLink": "https://github.com/patternfly/patternfly-react/pull/10661",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC014-color-props.tsx",
-    "expectedOutcome": "Replace color='cyan' with color='teal' and color='gold' with color='yellow' on Banner and Label components."
+    "expectedOutcome": "Replace Label color='cyan' with color='teal' and color='gold' with color='yellow'."
   },
   {
     "id": "TC015",
