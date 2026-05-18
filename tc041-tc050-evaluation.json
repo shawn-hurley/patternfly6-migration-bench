@@ -1,0 +1,112 @@
+[
+  {
+    "id": "TC041",
+    "testFile": "src/test-cases/TC041-login-main-header.tsx",
+    "component": "Login main header",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "n/a",
+    "reasoning": "No code changes needed for this internal markup change. File correctly left unchanged by the tool. Expected outcome met.",
+    "toolOutput": "unchanged",
+    "codemodsOutput": "unchanged"
+  },
+  {
+    "id": "TC042",
+    "testFile": "src/test-cases/TC042-masthead-brand-logo.tsx",
+    "component": "Masthead",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "reasoning": "MastheadBrand correctly renamed to MastheadLogo and wrapped in new MastheadBrand component. Tool also wrapped in MastheadMain (which is proper structure per TC044). Transformation is equivalent to pf-codemods but without data-codemods markers.",
+    "toolOutput": "MastheadBrand -> MastheadLogo, wrapped in new MastheadBrand and MastheadMain",
+    "codemodsOutput": "Same transformation with data-codemods attributes"
+  },
+  {
+    "id": "TC043",
+    "testFile": "src/test-cases/TC043-masthead-bgcolor.tsx",
+    "component": "Masthead",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "reasoning": "backgroundColor prop correctly removed from Masthead. Both tool and pf-codemods produce equivalent results.",
+    "toolOutput": "backgroundColor prop removed",
+    "codemodsOutput": "backgroundColor prop removed"
+  },
+  {
+    "id": "TC044",
+    "testFile": "src/test-cases/TC044-masthead-structure.tsx",
+    "component": "Masthead",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "reasoning": "MastheadToggle and MastheadBrand correctly wrapped in MastheadMain. MastheadBrand renamed to MastheadLogo and wrapped in new MastheadBrand. BarsIcon also correctly moved to Button's icon prop. Equivalent to pf-codemods without markers.",
+    "toolOutput": "Proper structure with MastheadMain wrapper, brand/logo transformation, icon prop fix",
+    "codemodsOutput": "Same with data-codemods markers"
+  },
+  {
+    "id": "TC045",
+    "testFile": "src/test-cases/TC045-menuitemaction-markup.tsx",
+    "component": "Menu item action",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "n/a",
+    "reasoning": "No code changes needed for this internal markup change. File correctly left unchanged by the tool.",
+    "toolOutput": "unchanged",
+    "codemodsOutput": "unchanged"
+  },
+  {
+    "id": "TC046",
+    "testFile": "src/test-cases/TC046-menutoggle-icon.tsx",
+    "component": "Menu toggle",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "reasoning": "CogIcon correctly moved from children to icon prop on MenuToggle. pf-codemods did not fix this - tool output is better.",
+    "toolOutput": "icon={<CogIcon />} in prop, 'Settings' as children",
+    "codemodsOutput": "unchanged (not fixed by codemods)"
+  },
+  {
+    "id": "TC047",
+    "testFile": "src/test-cases/TC047-missing-page.tsx",
+    "component": "Missing page",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "reasoning": "InvalidObject correctly renamed to MissingPage. Props also correctly renamed from invalidObjectTitleText/invalidObjectBodyText to titleText/bodyText. Equivalent to pf-codemods without data-codemods marker.",
+    "toolOutput": "MissingPage with titleText/bodyText props",
+    "codemodsOutput": "Same with data-codemods marker"
+  },
+  {
+    "id": "TC048",
+    "testFile": "src/test-cases/TC048-modal-deprecated.tsx",
+    "component": "Modal",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "reasoning": "Tool migrated to the new composable Modal API using ModalHeader/ModalBody/ModalFooter, which is the preferred PF6 approach. pf-codemods only moved import to /deprecated. Composable API is better than deprecated import.",
+    "toolOutput": "Composable API with ModalHeader, ModalBody, ModalFooter",
+    "codemodsOutput": "Moved to @patternfly/react-core/deprecated"
+  },
+  {
+    "id": "TC049",
+    "testFile": "src/test-cases/TC049-modal-next.tsx",
+    "component": "Modal next",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "reasoning": "Tool migrated to composable Modal API with ModalHeader/ModalBody. Expected outcome states either approach (composable or /deprecated) scores 3, but composable API is the preferred path. Tool output is better than pf-codemods deprecated import.",
+    "toolOutput": "Composable API with ModalHeader, ModalBody",
+    "codemodsOutput": "Moved to @patternfly/react-core/deprecated"
+  },
+  {
+    "id": "TC050",
+    "testFile": "src/test-cases/TC050-multicontentcard-props.tsx",
+    "component": "Multi content card",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "reasoning": "leftBorderVariant and withHeaderBorder props correctly removed from MultiContentCard. Both tool and pf-codemods produce equivalent results.",
+    "toolOutput": "Both props removed",
+    "codemodsOutput": "Both props removed"
+  }
+]
