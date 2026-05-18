@@ -1,3 +1,8 @@
+/* PF5 test: CSS uses --pf-v5-global--* tokens.
+   In PF6, update to --pf-v6-* prefix for auto-mappable tokens.
+   Note: pf-codemods does NOT fix CSS files — any correct CSS token update
+   is "better" than codemods baseline.
+   Color tokens may need manual mapping to new PF6 design token names. */
 .custom-element {
   padding: var(--pf-v5-global--spacer--md);
   color: var(--pf-v5-global--Color--dark-100);

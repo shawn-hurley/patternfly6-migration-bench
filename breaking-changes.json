@@ -237,7 +237,7 @@
     "prLink": "https://github.com/patternfly/patternfly-react/pull/10359",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC024-duallistselector-next.tsx",
-    "expectedOutcome": "Update DualListSelector imports from @patternfly/react-core/next to @patternfly/react-core."
+    "expectedOutcome": "Migrate DualListSelector from the old prop-based API (availableOptions/chosenOptions) to the new composable API (DualListSelectorPane/List/ListItem) in @patternfly/react-core. Alternatively, moving the old API to @patternfly/react-core/deprecated is acceptable. Score 3 for either approach."
   },
   {
     "id": "TC025",
@@ -267,7 +267,7 @@
     "prLink": "https://github.com/patternfly/patternfly-react/pull/9947",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC027-emptystate-header.tsx",
-    "expectedOutcome": "Remove EmptyStateHeader and EmptyStateIcon child components. Move the title text to EmptyState's titleText prop. Move the icon to EmptyState's icon prop. Move headingLevel to EmptyState."
+    "expectedOutcome": "Remove EmptyStateHeader and EmptyStateIcon child components. Move the title text to EmptyState's titleText prop as a plain string (not a JSX element). Move the icon to EmptyState's icon prop. Move headingLevel to EmptyState. Score 3: titleText should be a string, not a <Title> JSX element."
   },
   {
     "id": "TC028",
@@ -487,7 +487,7 @@
     "prLink": "https://github.com/patternfly/patternfly-react/pull/10358",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC049-modal-next.tsx",
-    "expectedOutcome": "Update Modal imports from @patternfly/react-core/next to @patternfly/react-core."
+    "expectedOutcome": "Migrate Modal to the new composable API using ModalHeader/ModalBody/ModalFooter as children instead of the old title/description props. Alternatively, moving to @patternfly/react-core/deprecated with the old prop API is acceptable. Score 3 for either approach."
   },
   {
     "id": "TC050",
@@ -647,7 +647,7 @@
     "prLink": "https://github.com/patternfly/patternfly-react/pull/10650",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC065-pagesection-nav-type.tsx",
-    "expectedOutcome": "Remove type='nav' from PageSection. Use the default type or place Nav content differently."
+    "expectedOutcome": "Remove type='nav' from PageSection. Valid options: remove the type prop entirely (falls back to 'default'), or replace with type='subnav' if the section contains subnav content. Both are score 3. pf-codemods also adds hasBodyWrapper={false} which is optional."
   },
   {
     "id": "TC066",
@@ -807,7 +807,7 @@
     "prLink": "",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC081-tokens-css.tsx",
-    "expectedOutcome": "Update CSS token variable names from --pf-v5-* to --pf-v6-* prefix. Non-color global tokens can be auto-fixed. Color tokens require manual mapping to new PF6 design token names."
+    "expectedOutcome": "Update CSS token variable names from --pf-v5-* to --pf-v6-* prefix (or --pf-t--* design token format). Non-color global tokens can be auto-fixed. Color tokens may need manual mapping to new PF6 design token names. Note: pf-codemods does NOT fix CSS files, so any correct CSS token update is better than the codemods baseline."
   },
   {
     "id": "TC082",
