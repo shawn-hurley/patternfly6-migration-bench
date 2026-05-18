@@ -5,15 +5,16 @@ import { Button } from "@patternfly/react-core";
 // as children instead of title/description props.
 // pf-codemods moves to /deprecated — the new composable API is the preferred path.
 // Score 3 for either approach (composable API or deprecated import).
-import { Modal, ModalVariant } from "@patternfly/react-core";
+import { Modal, ModalVariant, ModalHeader, ModalBody } from "@patternfly/react-core";
 
 export const TC049_ModalNext: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <>
       <Button onClick={() => setIsOpen(true)}>Open modal</Button>
-      <Modal variant={ModalVariant.small} isOpen={isOpen} onClose={() => setIsOpen(false)} title="Modal">
-        Content
+      <Modal variant={ModalVariant.small} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalHeader title="Modal" />
+        <ModalBody>Content</ModalBody>
       </Modal>
     </>
   );

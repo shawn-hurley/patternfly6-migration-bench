@@ -3,8 +3,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionToggle } from "@pa
 
 export const TC002_AccordionItemMarkup: React.FC = () => (
   <Accordion>
-    <AccordionItem>
-      <AccordionToggle id="tc002-toggle" isExpanded={false} onClick={() => {}}>
+    <AccordionItem isExpanded={false}>
+      <AccordionToggle id="tc002-toggle" onClick={() => {}}>
         Item
       </AccordionToggle>
       <AccordionContent>Content</AccordionContent>

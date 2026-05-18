@@ -1,9 +1,15 @@
 import React from "react";
-import { Tile } from "@patternfly/react-core";
+import { Card, CardTitle, CardBody } from "@patternfly/react-core";
 
 export const TC079_TileDeprecated: React.FC = () => (
   <div>
-    <Tile title="Tile 1" isSelected>Content 1</Tile>
-    <Tile title="Tile 2">Content 2</Tile>
+    <Card variant="secondary" isSelected>
+      <CardTitle>Tile 1</CardTitle>
+      <CardBody>Content 1</CardBody>
+    </Card>
+    <Card variant="secondary">
+      <CardTitle>Tile 2</CardTitle>
+      <CardBody>Content 2</CardBody>
+    </Card>
   </div>
 );

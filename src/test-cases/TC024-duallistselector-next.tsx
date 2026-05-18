@@ -4,11 +4,27 @@ import React from "react";
 // imported from @patternfly/react-core (promoted from /next).
 // pf-codemods moves to /deprecated instead — the composable migration is the preferred path.
 // Score 3 for either approach (composable API or deprecated import).
-import { DualListSelector } from "@patternfly/react-core";
+import {
+  DualListSelector,
+  DualListSelectorPane,
+  DualListSelectorList,
+  DualListSelectorListItem,
+  DualListSelectorControlsWrapper
+} from "@patternfly/react-core";
 
 export const TC024_DualListSelectorNext: React.FC = () => (
-  <DualListSelector
-    availableOptions={["Alpha", "Beta"]}
-    chosenOptions={["Gamma"]}
-  />
+  <DualListSelector>
+    <DualListSelectorPane>
+      <DualListSelectorList>
+        <DualListSelectorListItem>Alpha</DualListSelectorListItem>
+        <DualListSelectorListItem>Beta</DualListSelectorListItem>
+      </DualListSelectorList>
+    </DualListSelectorPane>
+    <DualListSelectorControlsWrapper />
+    <DualListSelectorPane isChosen>
+      <DualListSelectorList>
+        <DualListSelectorListItem>Gamma</DualListSelectorListItem>
+      </DualListSelectorList>
+    </DualListSelectorPane>
+  </DualListSelector>
 );

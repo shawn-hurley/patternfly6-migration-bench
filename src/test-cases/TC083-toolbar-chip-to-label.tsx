@@ -5,9 +5,9 @@ export const TC083_ToolbarChipToLabel: React.FC = () => (
   <Toolbar>
     <ToolbarContent>
       <ToolbarFilter
-        chips={["Chip 1", "Chip 2"]}
-        deleteChip={() => {}}
-        deleteChipGroup={() => {}}
+        labels={["Chip 1", "Chip 2"]}
+        deleteLabel={() => {}}
+        deleteLabelGroup={() => {}}
         categoryName="Status"
       >
         <ToolbarItem>Filter content</ToolbarItem>

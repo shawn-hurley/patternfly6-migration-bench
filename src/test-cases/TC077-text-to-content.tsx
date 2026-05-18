@@ -1,13 +1,13 @@
 import React from "react";
-import { Text, TextContent, TextList, TextListItem, TextVariants } from "@patternfly/react-core";
+import { Content, ContentVariants } from "@patternfly/react-core";
 
 export const TC077_TextToContent: React.FC = () => (
-  <TextContent>
-    <Text component={TextVariants.h1}>Heading</Text>
-    <Text component={TextVariants.p}>Paragraph text</Text>
-    <TextList>
-      <TextListItem>Item 1</TextListItem>
-      <TextListItem>Item 2</TextListItem>
-    </TextList>
-  </TextContent>
+  <Content>
+    <Content component={ContentVariants.h1}>Heading</Content>
+    <Content component={ContentVariants.p}>Paragraph text</Content>
+    <Content component="ul">
+      <Content component="li">Item 1</Content>
+      <Content component="li">Item 2</Content>
+    </Content>
+  </Content>
 );

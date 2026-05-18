@@ -5,7 +5,7 @@ export const TC073_SwitchLabelOff: React.FC = () => (
   <Switch
     id="tc073-switch"
     label="Enabled"
-    labelOff="Disabled"
+
     isChecked={false}
     onChange={() => {}}
   />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, ModalVariant } from "@patternfly/react-core";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, ModalVariant } from "@patternfly/react-core";
 
 export const TC048_ModalDeprecated: React.FC = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -8,15 +8,17 @@ export const TC048_ModalDeprecated: React.FC = () => {
       <Button onClick={() => setIsOpen(true)}>Open modal</Button>
       <Modal
         variant={ModalVariant.small}
-        title="Modal title"
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        actions={[
-          <Button key="confirm" variant="primary" onClick={() => setIsOpen(false)}>Confirm</Button>,
-          <Button key="cancel" variant="link" onClick={() => setIsOpen(false)}>Cancel</Button>,
-        ]}
       >
-        Modal body content
+        <ModalHeader title="Modal title" />
+        <ModalBody>
+          Modal body content
+        </ModalBody>
+        <ModalFooter>
+          <Button key="confirm" variant="primary" onClick={() => setIsOpen(false)}>Confirm</Button>
+          <Button key="cancel" variant="link" onClick={() => setIsOpen(false)}>Cancel</Button>
+        </ModalFooter>
       </Modal>
     </>
   );

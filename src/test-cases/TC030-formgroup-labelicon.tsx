@@ -5,7 +5,7 @@ import { HelpIcon } from "@patternfly/react-icons";
 export const TC030_FormGroupLabelIcon: React.FC = () => (
   <FormGroup
     label="Full name"
-    labelIcon={
+    labelHelp={
       <Popover bodyContent="Enter your full legal name">
         <button aria-label="Help">
           <HelpIcon />

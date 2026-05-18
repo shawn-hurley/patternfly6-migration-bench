@@ -5,6 +5,6 @@ export const TC038_LogSnippetVariant: React.FC = () => (
   <LogSnippet
     message="Error occurred during build"
     logSnippet="ERROR: Build failed at step 3"
-    leftBorderVariant="danger"
+    variant="danger"
   />
 );
