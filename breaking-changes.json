@@ -617,7 +617,7 @@
     "prLink": "https://github.com/patternfly/patternfly-react/pull/10650",
     "fixedWithCodemods": true,
     "testFile": "src/test-cases/TC062-page-section-bodywrapper.tsx",
-    "expectedOutcome": "Add hasBodyWrapper={false} to PageSection components. If isWidthLimited was used, verify it still works with the new hasBodyWrapper behavior."
+    "expectedOutcome": "The hasBodyWrapper prop defaults to true in PF6, which preserves PF5 behavior (body wrapper div always present). Not adding hasBodyWrapper is a valid migration — score 3. Adding hasBodyWrapper={false} is an optimization that removes unnecessary wrappers but changes PF5 DOM structure — also score 2-3. Note: isWidthLimited requires the body wrapper to work (CSS targets the child .page__main-body div), so sections with isWidthLimited must keep hasBodyWrapper=true (the default)."
   },
   {
     "id": "TC063",
