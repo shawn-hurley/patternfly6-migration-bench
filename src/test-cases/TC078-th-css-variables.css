@@ -1,4 +1,4 @@
-.custom-table th.pf-v5-c-table__sticky-column {
-  --pf-v5-c-table__sticky-column--Left: 0;
-  --pf-v5-c-table__sticky-column--Right: auto;
+.custom-table th.pf-v6-c-table__sticky-column {
+  --pf-v6-c-table__sticky-column--InsetInlineStart: 0;
+  --pf-v6-c-table__sticky-column--InsetInlineEnd: auto;
 }

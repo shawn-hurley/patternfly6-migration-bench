@@ -9,12 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@patternfly/react-core": "5.3.4",
-    "@patternfly/react-table": "5.3.4",
-    "@patternfly/react-icons": "5.3.2",
-    "@patternfly/react-tokens": "5.3.1",
+    "@patternfly/react-core": "^6.4.1",
+    "@patternfly/react-table": "^6.4.1",
+    "@patternfly/react-icons": "^6.4.0",
+    "@patternfly/react-tokens": "^6.4.0",
     "@patternfly/react-component-groups": "5.4.0",
-    "@patternfly/react-styles": "5.3.1",
+    "@patternfly/react-styles": "^6.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0"
@@ -24,6 +24,7 @@
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "@patternfly/react-drag-drop": "^6.4.1"
   }
 }

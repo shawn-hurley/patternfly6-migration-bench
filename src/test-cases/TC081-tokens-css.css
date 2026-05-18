@@ -1,5 +1,5 @@
 .custom-element {
-  padding: var(--pf-v5-global--spacer--md);
-  color: var(--pf-v5-global--Color--dark-100);
-  background-color: var(--pf-v5-global--BackgroundColor--100);
+  padding: var(--pf-t--global--spacer--md);
+  color: var(--pf-t--global--Color--dark-100);
+  background-color: var(--pf-t--global--background--color--100);
 }

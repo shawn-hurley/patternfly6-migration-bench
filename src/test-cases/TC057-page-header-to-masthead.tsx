@@ -8,7 +8,7 @@ const header = (
 );
 
 export const TC057_PageHeaderToMasthead: React.FC = () => (
-  <Page header={header}>
+  <Page masthead={header}>
     <PageSection>Page content</PageSection>
   </Page>
 );

@@ -1,3 +1,3 @@
-.custom-slider .pf-v5-c-slider__step {
-  --pf-v5-c-slider__step--Left: 50%;
+.custom-slider .pf-v6-c-slider__step {
+  --pf-v6-c-slider__step--InsetInlineStart: 50%;
 }

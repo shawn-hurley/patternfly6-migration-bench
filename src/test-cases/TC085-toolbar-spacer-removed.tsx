@@ -4,8 +4,8 @@ import { Button, Toolbar, ToolbarContent, ToolbarGroup, ToolbarItem } from "@pat
 export const TC085_ToolbarSpacerRemoved: React.FC = () => (
   <Toolbar>
     <ToolbarContent>
-      <ToolbarGroup spacer={{ default: "spacerLg" }}>
-        <ToolbarItem spacer={{ default: "spacerMd" }}>
+      <ToolbarGroup gap={{ default: "spacerLg" }}>
+        <ToolbarItem gap={{ default: "spacerMd" }}>
           <Button>Action 1</Button>
         </ToolbarItem>
         <ToolbarItem>

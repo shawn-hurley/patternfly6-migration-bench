@@ -5,7 +5,7 @@ import { HomeIcon } from "@patternfly/react-icons";
 export const TC053_NavItemWrapper: React.FC = () => (
   <Nav>
     <NavList>
-      <NavItem to="#" hasNavLinkWrapper>
+      <NavItem to="#">
         <HomeIcon /> Home
       </NavItem>
     </NavList>
