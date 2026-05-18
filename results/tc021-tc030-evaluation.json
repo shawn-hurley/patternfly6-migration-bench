@@ -1,0 +1,97 @@
+[
+  {
+    "id": "TC021",
+    "component": "Drawer content",
+    "fixedWithCodemods": true,
+    "correctness": 2,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "Changed colorVariant='no-background' to 'default'. Expected outcome says 'primary' but 'default' is also valid in PF6. pf-codemods removes the prop entirely. Both approaches work, but using 'default' explicitly is reasonable."
+  },
+  {
+    "id": "TC022",
+    "component": "Drawer head",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "n/a",
+    "issues": [],
+    "notes": "No changes made. This is correct - this is an internal markup change requiring no code modifications."
+  },
+  {
+    "id": "TC023",
+    "component": "Dual list selector",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "issues": [],
+    "notes": "Migrated from old prop-based API to new composable API with DualListSelectorPane/List/ListItem. This is the preferred forward-looking approach, better than pf-codemods which only moves to /deprecated."
+  },
+  {
+    "id": "TC024",
+    "component": "Dual list selector next",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "issues": [],
+    "notes": "Migrated to new composable API with full implementation including controls and tooltips. Better than pf-codemods which moves to /deprecated. Per expectedOutcome, both approaches score 3, but this is more forward-looking."
+  },
+  {
+    "id": "TC025",
+    "component": "Duplicate imports",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "No changes made. Per expectedOutcome, this test case has a design limitation - TypeScript prevents actual duplicate imports in source. No duplicates exist to remove, so no action is correct."
+  },
+  {
+    "id": "TC026",
+    "component": "Empty state",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "Removed EmptyStateIcon and EmptyStateHeader imports, moved functionality to EmptyState props (titleText, headingLevel, icon). Matches pf-codemods output and expectedOutcome exactly."
+  },
+  {
+    "id": "TC027",
+    "component": "Empty state header",
+    "fixedWithCodemods": true,
+    "correctness": 2,
+    "vsCodemods": "worse",
+    "issues": [
+      "titleText should be a plain string, not a JSX element containing <Title>"
+    ],
+    "notes": "Removed EmptyStateIcon and child components correctly, but titleText={<Title headingLevel='h2' size='lg'>No results found</Title>} should be titleText='No results found' (plain string). pf-codemods does this correctly."
+  },
+  {
+    "id": "TC028",
+    "component": "Error state",
+    "fixedWithCodemods": true,
+    "correctness": 1,
+    "vsCodemods": "worse",
+    "issues": [
+      "Missing bodyText prop - only renamed errorTitle to titleText",
+      "errorDescription should be renamed to bodyText"
+    ],
+    "notes": "Only partially correct. Renamed errorTitle to titleText but lost errorDescription entirely instead of renaming it to bodyText. pf-codemods correctly renames both props."
+  },
+  {
+    "id": "TC029",
+    "component": "Form field group header title text object",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "No changes made. The test file doesn't actually use the FormFiledGroupHeaderTitleTextObject interface in type annotations, so there's nothing to fix. This is correct behavior."
+  },
+  {
+    "id": "TC030",
+    "component": "Form group",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "Correctly renamed labelIcon to labelHelp on FormGroup. Matches pf-codemods output and expectedOutcome exactly."
+  }
+]

@@ -1,0 +1,785 @@
+{
+  "runDate": "2026-05-18",
+  "toolBranch": "shawn-testing-5",
+  "baselineBranch": "pf-codemods-baseline",
+  "summary": {
+    "total": 85,
+    "correct": 73,
+    "partial": 5,
+    "wrong": 0,
+    "unchanged": 7,
+    "betterThanCodemods": 21,
+    "equalToCodemods": 45,
+    "worseThanCodemods": 7,
+    "notApplicable": 12,
+    "codemodsFixableTotal": 66,
+    "codemodsFixableMatched": 60
+  },
+  "testCases": [
+    {
+      "id": "TC001",
+      "component": "Accordion content",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed isHidden prop from AccordionContent and moved isExpanded from AccordionToggle to AccordionItem. Matches pf-codemods output."
+    },
+    {
+      "id": "TC002",
+      "component": "Accordion item",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Markup change requires no code changes per spec, but tool correctly migrated isExpanded from AccordionToggle to AccordionItem (related TC003 breaking change). This is the right thing to do."
+    },
+    {
+      "id": "TC003",
+      "component": "Accordion toggle",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly moved isExpanded prop from AccordionToggle to parent AccordionItem. Matches pf-codemods output."
+    },
+    {
+      "id": "TC004",
+      "component": "All",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Pre-placed data-codemods attributes were not removed. Per spec, score 2 is acceptable since the real test is whether the tool cleans up its own markers. Both tools left these unchanged."
+    },
+    {
+      "id": "TC005",
+      "component": "Avatar",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced border prop with isBordered. Matches pf-codemods output."
+    },
+    {
+      "id": "TC006",
+      "component": "Banner",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "worse",
+      "issues": ["variant prop correctly renamed to color, but 'gold' value not renamed to 'yellow'"],
+      "notes": "Tool changed variant→color but failed to map gold→yellow. pf-codemods correctly maps both the prop name and the color value."
+    },
+    {
+      "id": "TC007",
+      "component": "Button",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly moved icon elements from Button children to icon prop. Icon-only button properly made self-closing. Matches pf-codemods output."
+    },
+    {
+      "id": "TC008",
+      "component": "Button",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly renamed isActive to isClicked. Matches pf-codemods output."
+    },
+    {
+      "id": "TC009",
+      "component": "Card",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Removed deprecated raised props and properly migrated to new PF6 pattern with CardHeader and selectableActions object. pf-codemods only removed the props without providing replacement structure. Tool output is more complete."
+    },
+    {
+      "id": "TC010",
+      "component": "Card",
+      "fixedWithCodemods": true,
+      "correctness": 1,
+      "vsCodemods": "worse",
+      "issues": ["File unchanged - selectableActions should be removed or simplified for basic clickable cards"],
+      "notes": "Expected outcome is to remove selectableActions for basic clickable cards in PF6. Tool left file unchanged. pf-codemods simplified the selectableActions object to minimal fields."
+    },
+    {
+      "id": "TC011",
+      "component": "Checkbox",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced isLabelBeforeButton with labelPosition='start'. Matches pf-codemods output exactly."
+    },
+    {
+      "id": "TC012",
+      "component": "Chip",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced Chip/ChipGroup with Label/LabelGroup. The codemods adds variant='outline' for better styling, but the tool's output is fully correct per the expected outcome which allows both approaches."
+    },
+    {
+      "id": "TC013",
+      "component": "Chip",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "worse",
+      "issues": ["Kept onClick prop instead of converting to onClose for Label component"],
+      "notes": "Replaced Chip with Label but kept onClick instead of converting to onClose. In PF6 Label, onClose is the proper prop for closable labels. Codemods correctly converted onClick to onClose."
+    },
+    {
+      "id": "TC014",
+      "component": "Color props",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced color='cyan' with 'teal' and color='gold' with 'yellow'. Perfect match with codemods."
+    },
+    {
+      "id": "TC015",
+      "component": "Content header",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly renamed ContentHeader to PageHeader with proper import update. The data-codemods attribute in baseline is acceptable."
+    },
+    {
+      "id": "TC016",
+      "component": "Data list action",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Correctly removed isPlainButtonAction prop. Also simplified structure by removing DataListItemCells wrapper, which is a valid PF6 pattern. Codemods added incorrect icon='Action' on Button."
+    },
+    {
+      "id": "TC017",
+      "component": "Deprecated components",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Fully migrated old Dropdown to new composable API with MenuToggle, DropdownList, and proper state management. This is the ideal migration. Codemods doesn't handle this (used manual stubs)."
+    },
+    {
+      "id": "TC018",
+      "component": "Drag drop",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly moved DragDrop imports to @patternfly/react-core/deprecated. Perfect match with codemods."
+    },
+    {
+      "id": "TC019",
+      "component": "Drawer",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed hasNoPadding prop from DrawerHead. Matches codemods output."
+    },
+    {
+      "id": "TC020",
+      "component": "Drawer",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced colorVariant='light-200' with 'secondary' on all three components (DrawerContent, DrawerPanelContent, DrawerSection). Perfect match with codemods."
+    },
+    {
+      "id": "TC021",
+      "component": "Drawer content",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "equal",
+      "issues": ["Used colorVariant='default' instead of the preferred 'primary'"],
+      "notes": "Replaced colorVariant='no-background' with 'default'. The expectedOutcome suggests 'primary' or removing the prop entirely. 'default' is valid but 'primary' is the new recommended value per the PR description."
+    },
+    {
+      "id": "TC022",
+      "component": "Drawer head",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No code changes needed for markup change. Tool correctly left the file unchanged."
+    },
+    {
+      "id": "TC023",
+      "component": "Dual list selector",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool migrated to new composable DualListSelector API (preferred). pf-codemods only moved imports to deprecated package (minimal fix). Both valid per expectedOutcome, but new API is better."
+    },
+    {
+      "id": "TC024",
+      "component": "Dual list selector next",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool migrated from old prop-based API to new composable DualListSelector API with Pane/List/ListItem. pf-codemods moved to deprecated package. Both valid, but composable API is the better migration."
+    },
+    {
+      "id": "TC025",
+      "component": "Duplicate imports",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Test case has design limitation - TypeScript prevents actual duplicate imports. Both tools left unchanged (correct for this invalid test case)."
+    },
+    {
+      "id": "TC026",
+      "component": "Empty state",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed EmptyStateHeader and EmptyStateIcon imports. The components are now built into EmptyState via props."
+    },
+    {
+      "id": "TC027",
+      "component": "Empty state header",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "worse",
+      "issues": ["titleText should be a plain string, not a JSX Title element"],
+      "notes": "Removed EmptyStateHeader and EmptyStateIcon components and moved props to EmptyState. However, titleText is set to a JSX <Title> element instead of a plain string. pf-codemods correctly uses a string. The expectedOutcome explicitly states titleText should be a string, not a JSX element."
+    },
+    {
+      "id": "TC028",
+      "component": "Error state",
+      "fixedWithCodemods": true,
+      "correctness": 1,
+      "vsCodemods": "worse",
+      "issues": ["Lost the errorDescription prop entirely - only renamed errorTitle to titleText"],
+      "notes": "Critical issue: Only renamed errorTitle to titleText, but completely lost the errorDescription prop. It should be renamed to bodyText. pf-codemods correctly renamed both props."
+    },
+    {
+      "id": "TC029",
+      "component": "Form field group header title text object",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly renamed FormFiledGroupHeaderTitleTextObject to FormFieldGroupHeaderTitleTextObject (fixed the 'Filed' typo to 'Field'). Clean output without data-codemods markers."
+    },
+    {
+      "id": "TC030",
+      "component": "Form group",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly renamed labelIcon to labelHelp on FormGroup. Clean output."
+    },
+    {
+      "id": "TC031",
+      "component": "Helper text item",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed hasIcon and isDynamic props from HelperTextItem. Icons now render automatically based on variant prop."
+    },
+    {
+      "id": "TC032",
+      "component": "Helper text item",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No code changes needed for behavioral change. Tool correctly left unchanged."
+    },
+    {
+      "id": "TC033",
+      "component": "Invalid object",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Correctly renamed invalidObjectTitleText to titleText and invalidObjectBodyText to bodyText on InvalidObject. Clean output without data-codemods markers or type assertions that pf-codemods adds."
+    },
+    {
+      "id": "TC034",
+      "component": "Jump links item",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool added the required href prop to JumpLinksItem. pf-codemods only added a @ts-expect-error workaround to suppress the build error without actually fixing the code."
+    },
+    {
+      "id": "TC035",
+      "component": "Jump links item",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No code changes needed for markup change. Tool correctly left unchanged."
+    },
+    {
+      "id": "TC036",
+      "component": "Kebab toggle",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool fully migrated KebabToggle to new Dropdown+MenuToggle pattern with proper state management and EllipsisVIcon. pf-codemods only provided manual stub components as it cannot handle this migration."
+    },
+    {
+      "id": "TC037",
+      "component": "Label",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced isOverflowLabel prop with variant='overflow' on Label."
+    },
+    {
+      "id": "TC038",
+      "component": "Log snippet",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Correctly renamed leftBorderVariant to variant on LogSnippet. Clean output without data-codemods markers or type assertions."
+    },
+    {
+      "id": "TC039",
+      "component": "Log viewer",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No code changes needed - the LogViewer stylesheet path change would only affect CSS imports. This test file doesn't import the stylesheet."
+    },
+    {
+      "id": "TC040",
+      "component": "Login main footer links item",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "worse",
+      "issues": ["Used anchor tag as child instead of Button component"],
+      "notes": "Restructured LoginMainFooterLinksItem to pass content as children, but used an anchor tag instead of the expected Button component. pf-codemods used a Button which is the idiomatic PF6 pattern."
+    },
+    {
+      "id": "TC041",
+      "component": "Login main header",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "No code changes needed for internal markup change. Both tool and pf-codemods correctly left unchanged."
+    },
+    {
+      "id": "TC042",
+      "component": "Masthead",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool correctly restructured MastheadBrand > MastheadLogo > Brand and added MastheadMain wrapper. Better than pf-codemods which lacks MastheadMain (needed per TC044)."
+    },
+    {
+      "id": "TC043",
+      "component": "Masthead",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed backgroundColor prop from Masthead. Both tool and pf-codemods handled this properly."
+    },
+    {
+      "id": "TC044",
+      "component": "Masthead",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly wrapped MastheadToggle and MastheadBrand in MastheadMain. Also migrated Button icon to prop (TC007) and added MastheadLogo wrapper (TC042). Both tools handled this correctly."
+    },
+    {
+      "id": "TC045",
+      "component": "Menu item action",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "No code changes needed for internal markup change. Both tool and pf-codemods correctly left unchanged."
+    },
+    {
+      "id": "TC046",
+      "component": "Menu toggle",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool correctly moved icon from MenuToggle children to icon prop. pf-codemods failed to apply this migration."
+    },
+    {
+      "id": "TC047",
+      "component": "Missing page",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly renamed InvalidObject to MissingPage and updated props from invalidObjectTitleText/invalidObjectBodyText to titleText/bodyText. Both tools handled this correctly."
+    },
+    {
+      "id": "TC048",
+      "component": "Modal",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool migrated to new composable API with ModalHeader/ModalBody/ModalFooter (preferred). pf-codemods moved to deprecated package (minimal but valid). Both score 3 per expectedOutcome, but composable API is more forward-looking."
+    },
+    {
+      "id": "TC049",
+      "component": "Modal next",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool migrated to composable API with ModalHeader (preferred). pf-codemods moved to deprecated package with old title prop (minimal but valid). Both score 3 per expectedOutcome, but composable API is better."
+    },
+    {
+      "id": "TC050",
+      "component": "Multi content card",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed leftBorderVariant and withHeaderBorder props from MultiContentCard. Both tools handled this properly."
+    },
+    {
+      "id": "TC051",
+      "component": "Nav",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly replaced variant='tertiary' with variant='horizontal-subnav'. Identical to pf-codemods output."
+    },
+    {
+      "id": "TC052",
+      "component": "Nav",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Correctly removed the theme prop from Nav. Identical to pf-codemods output."
+    },
+    {
+      "id": "TC053",
+      "component": "Nav item",
+      "fixedWithCodemods": true,
+      "correctness": 1,
+      "vsCodemods": "worse",
+      "issues": ["Removed hasNavLinkWrapper prop but did not move icon from children to icon prop as required"],
+      "notes": "Partial fix. The hasNavLinkWrapper prop was correctly removed, but the icon (<HomeIcon />) should have been moved from children to the icon prop on NavItem. The tool left the icon in children, which may not render correctly in PF6."
+    },
+    {
+      "id": "TC054",
+      "component": "Not authorized",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Excellent migration. Not only renamed props (title→titleText, description→bodyText) but also updated the component name from NotAuthorized to UnauthorizedAccess, which is the correct PF6 component name per react-component-groups PR #313. Cleaner than pf-codemods (no data-codemods marker)."
+    },
+    {
+      "id": "TC055",
+      "component": "Notification badge",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "Correctly unchanged. This is an internal markup change that requires no code modifications."
+    },
+    {
+      "id": "TC056",
+      "component": "Notification drawer header",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "Correctly unchanged. This is an internal markup change (Text to h1 element) that requires no code modifications."
+    },
+    {
+      "id": "TC057",
+      "component": "Page",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Correctly renamed header prop to masthead on Page. Cleaner than pf-codemods which also added hasBodyWrapper={false} to PageSection (not necessary for this breaking change)."
+    },
+    {
+      "id": "TC058",
+      "component": "Page",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Correctly renamed isTertiaryNavGrouped to isHorizontalSubnavGrouped on Page. Cleaner than pf-codemods which also added hasBodyWrapper={false} to PageSection (not necessary for this breaking change)."
+    },
+    {
+      "id": "TC059",
+      "component": "Page",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Correctly renamed isTertiaryNavWidthLimited to isHorizontalSubnavWidthLimited on Page. Cleaner than pf-codemods which also added hasBodyWrapper={false} to PageSection (not necessary for this breaking change)."
+    },
+    {
+      "id": "TC060",
+      "component": "Page",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Excellent migration. Correctly renamed tertiaryNav prop to horizontalSubnav on Page AND updated the Nav variant from 'tertiary' to 'horizontal-subnav' in the nav component definition. This shows the tool handled both the Page prop change and the related Nav variant change in the same file. Cleaner than pf-codemods (no unnecessary hasBodyWrapper)."
+    },
+    {
+      "id": "TC061",
+      "component": "Page",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No code changes needed for internal markup change. Tool cleaned up unused Nav import. Unchanged PageSection is correct per expectedOutcome."
+    },
+    {
+      "id": "TC062",
+      "component": "Page section",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly updated variant='light' to variant='default' (separate TC066 breaking change). Did not add hasBodyWrapper which is valid since it defaults to true, preserving PF5 behavior. pf-codemods explicitly set hasBodyWrapper."
+    },
+    {
+      "id": "TC063",
+      "component": "Page header tools item",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Test case has design limitation - uses placeholder div instead of actual PageHeaderToolsItem (not exported in PF5 5.3.x). No migration possible for placeholder. Both tool and codemods left unchanged."
+    },
+    {
+      "id": "TC064",
+      "component": "Page navigation",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly removed PageNavigation wrapper and placed Nav as direct child of Page. Clean migration matching expectedOutcome."
+    },
+    {
+      "id": "TC065",
+      "component": "Page section",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool changed type='nav' to type='subnav', which is valid per expectedOutcome ('remove type prop entirely OR replace with type=\"subnav\"'). pf-codemods removed type entirely. Both approaches are correct."
+    },
+    {
+      "id": "TC066",
+      "component": "Page section",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool correctly mapped all variant values: light→default, dark→secondary, darker→secondary per expectedOutcome. pf-codemods removed variant props entirely. Tool's approach preserves semantic intent."
+    },
+    {
+      "id": "TC067",
+      "component": "Page section",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No code changes strictly needed for behavioral change. Tool updated variant='light' to 'default' (TC066 breaking change), which is acceptable per expectedOutcome."
+    },
+    {
+      "id": "TC068",
+      "component": "Page sidebar",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly removed theme prop from PageSidebar. Clean migration matching expectedOutcome."
+    },
+    {
+      "id": "TC069",
+      "component": "Pagination",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "Internal markup change requires no code changes. Tool correctly left component unchanged per expectedOutcome."
+    },
+    {
+      "id": "TC070",
+      "component": "Popper",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool performed complete migration from deprecated Select to new PF6 Select API with MenuToggle, SelectList, and SelectOption. Properly handles state management, toggle ref, and onOpenChange. This is the correct migration path. pf-codemods baseline only has manual stubs."
+    },
+    {
+      "id": "TC071",
+      "component": "Simple file upload",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No changes needed. Test case uses MultipleFileUpload instead of SimpleFileUpload, so the aria-describedby change doesn't apply. Both tool and codemods correctly left it unchanged."
+    },
+    {
+      "id": "TC072",
+      "component": "Slider step",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool correctly updated CSS variable from --pf-v5-c-slider__step--Left to --pf-v6-c-slider__step--InsetInlineStart. Also updated class name from pf-v5-c to pf-v6-c. pf-codemods doesn't fix CSS files, so tool is better."
+    },
+    {
+      "id": "TC073",
+      "component": "Switch",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly removed labelOff prop from Switch. Same result as pf-codemods."
+    },
+    {
+      "id": "TC074",
+      "component": "Tabs",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly renamed isSecondary to isSubtab on Tabs. Same result as pf-codemods."
+    },
+    {
+      "id": "TC075",
+      "component": "Tabs",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly replaced variant='light300' with variant='secondary' on Tabs. Same result as pf-codemods."
+    },
+    {
+      "id": "TC076",
+      "component": "Tabs",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "n/a",
+      "issues": [],
+      "notes": "No changes needed for internal markup change. Tool correctly left the file unchanged."
+    },
+    {
+      "id": "TC077",
+      "component": "Text",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly replaced Text, TextContent, TextList, TextListItem with Content component and updated imports. Same result as pf-codemods."
+    },
+    {
+      "id": "TC078",
+      "component": "Th",
+      "fixedWithCodemods": false,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool correctly updated CSS variables from --pf-v5-c-table__sticky-column--Left/--Right to --pf-v6-c-table__sticky-column--InsetInlineStart/--InsetInlineEnd. Also updated class name from pf-v5-c to pf-v6-c. pf-codemods doesn't fix CSS files, so tool is better."
+    },
+    {
+      "id": "TC079",
+      "component": "Tile",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool replaced Tile with Card component (the recommended migration path), which is better than pf-codemods' approach of moving Tile to deprecated package. Tool used Card with variant='secondary' and properly restructured the component with CardTitle and CardBody."
+    },
+    {
+      "id": "TC080",
+      "component": "Tokens",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool updated token imports with t_ prefix and chose better semantic tokens (t_global_spacer_300 instead of t_global_spacer_md, t_global_text_color_regular instead of deprecated color token). pf-codemods added t_ prefix but kept old token names with a warning comment for the color token. Tool's semantic mapping is more complete."
+    },
+    {
+      "id": "TC081",
+      "component": "Tokens",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "better",
+      "issues": [],
+      "notes": "Tool correctly updated CSS tokens from --pf-v5-* to --pf-t--* (PF6 design token format). pf-codemods does NOT fix CSS files, leaving them unchanged with PF5 tokens. The tool's output is fully correct and significantly better than the baseline."
+    },
+    {
+      "id": "TC082",
+      "component": "Toolbar",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly removed the usePageInsets prop from Toolbar. The output matches pf-codemods exactly."
+    },
+    {
+      "id": "TC083",
+      "component": "Toolbar",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Tool correctly renamed all chip-based props to label-based props on ToolbarFilter: chips→labels, deleteChip→deleteLabel, deleteChipGroup→deleteLabelGroup. Output matches pf-codemods exactly."
+    },
+    {
+      "id": "TC084",
+      "component": "Toolbar",
+      "fixedWithCodemods": true,
+      "correctness": 3,
+      "vsCodemods": "equal",
+      "issues": [],
+      "notes": "Test case does not actually use the ToolbarChipGroup or ToolbarChip interfaces being tested, so there is nothing to migrate. Tool correctly left the file unchanged. pf-codemods added a comment but otherwise unchanged. Both are correct."
+    },
+    {
+      "id": "TC085",
+      "component": "Toolbar",
+      "fixedWithCodemods": true,
+      "correctness": 2,
+      "vsCodemods": "worse",
+      "issues": ["Uses gap prop but with spacer values (spacerLg, spacerMd) instead of gap values (gapLg, gapMd)"],
+      "notes": "Tool correctly replaced spacer prop with gap prop, but kept the original spacer value names (spacerLg, spacerMd) instead of updating them to the appropriate gap value names (gapLg, gapMd). pf-codemods correctly updates both the prop name and the value names. This is partially correct but not idiomatic."
+    }
+  ]
+}

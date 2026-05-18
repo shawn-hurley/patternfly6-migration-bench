@@ -1,0 +1,92 @@
+[
+  {
+    "id": "TC031",
+    "component": "Helper text item",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "Both tool and pf-codemods correctly removed hasIcon and isDynamic props from HelperTextItem. Icons now render automatically based on variant."
+  },
+  {
+    "id": "TC032",
+    "component": "Helper text item",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "n/a",
+    "issues": [],
+    "notes": "Correctly left unchanged. This is a behavioral change only - screenReaderText now only renders when variant is not 'default'. Both tool and pf-codemods appropriately made no modifications."
+  },
+  {
+    "id": "TC033",
+    "component": "Invalid object",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "issues": [],
+    "notes": "Tool correctly renamed InvalidObject to MissingPage and changed invalidObjectTitleText/invalidObjectBodyText to titleText/bodyText. Cleaner than pf-codemods output which includes data-codemods marker."
+  },
+  {
+    "id": "TC034",
+    "component": "Jump links item",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "issues": [],
+    "notes": "Tool correctly added missing href prop (href='#section-1') to JumpLinksItem. pf-codemods only added @ts-expect-error comment as a workaround. Tool actually fixed the breaking change."
+  },
+  {
+    "id": "TC035",
+    "component": "Jump links item",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "n/a",
+    "issues": [],
+    "notes": "Correctly left unchanged. This is an internal markup change (JumpLinksItem now uses Button internally). Both tool and pf-codemods appropriately made no modifications."
+  },
+  {
+    "id": "TC036",
+    "component": "Kebab toggle",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "issues": [],
+    "notes": "Tool fully migrated KebabToggle to new Dropdown pattern with MenuToggle variant='plain' and EllipsisVIcon. pf-codemods only provided manual stubs. Complete migration vs no migration."
+  },
+  {
+    "id": "TC037",
+    "component": "Label",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "equal",
+    "issues": [],
+    "notes": "Both tool and pf-codemods correctly replaced isOverflowLabel prop with variant='overflow' on Label."
+  },
+  {
+    "id": "TC038",
+    "component": "Log snippet",
+    "fixedWithCodemods": true,
+    "correctness": 3,
+    "vsCodemods": "better",
+    "issues": [],
+    "notes": "Tool correctly renamed leftBorderVariant to variant on LogSnippet. Cleaner output than pf-codemods which added unnecessary type assertion ('as any')."
+  },
+  {
+    "id": "TC039",
+    "component": "Log viewer",
+    "fixedWithCodemods": false,
+    "correctness": 3,
+    "vsCodemods": "n/a",
+    "issues": [],
+    "notes": "Correctly unchanged. This test case is a placeholder for CSS import path migration (LogViewer stylesheet moved from @patternfly/react-core to @patternfly/react-log-viewer). No component code to migrate."
+  },
+  {
+    "id": "TC040",
+    "component": "Login main footer links item",
+    "fixedWithCodemods": true,
+    "correctness": 2,
+    "vsCodemods": "worse",
+    "issues": ["Tool used anchor tag instead of Button component"],
+    "notes": "Tool restructured LoginMainFooterLinksItem to pass content as children using an anchor tag. Expected outcome specifies using a Button component. pf-codemods correctly uses Button with icon prop, though with complex spread syntax. Tool's approach works but doesn't match the idiomatic PF6 pattern."
+  }
+]
