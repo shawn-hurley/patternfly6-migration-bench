@@ -533,11 +533,11 @@
     "id": "TC054",
     "component": "Not authorized",
     "repo": "React-component-groups",
-    "description": "NotAuthorized props renamed: description to bodyText, title to titleText.",
+    "description": "NotAuthorized renamed to UnauthorizedAccess. Props renamed: description to bodyText, title to titleText.",
     "prLink": "https://github.com/patternfly/react-component-groups/pull/145",
-    "fixedWithCodemods": true,
+    "fixedWithCodemods": false,
     "testFile": "src/test-cases/TC054-notauthorized-props.tsx",
-    "expectedOutcome": "Rename description to bodyText and title to titleText on NotAuthorized."
+    "expectedOutcome": "Rename component from NotAuthorized to UnauthorizedAccess and update import. Rename props: description to bodyText, title to titleText. Renaming only the props without the component rename scores 1 since NotAuthorized does not exist in PF6 and the import would fail."
   },
   {
     "id": "TC055",
